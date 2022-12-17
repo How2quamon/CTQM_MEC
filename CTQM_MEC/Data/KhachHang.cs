@@ -18,5 +18,8 @@ namespace CTQM_Car.Data
         public DateTime NgaySinh { get; set; }
         [Required]
         public string? GiayPhepLaiXe { get; set; }
+        [Required]
+        public string? Email { get; set; }
+        public string? Password { get; set; }
     }
 }

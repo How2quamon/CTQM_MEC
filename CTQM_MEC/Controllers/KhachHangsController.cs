@@ -78,11 +78,13 @@ namespace CTQM_MEC.Controllers
                 kh.DiaChi = "";
                 kh.NgaySinh = DateTime.Today;
                 kh.GiayPhepLaiXe = "";
+                kh.Email = newKH.NewEmail;
+                kh.Password = newKH.Password;
                 _context.Add(kh);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return View("Access", "Login");
             }
-            return View("Access", "Login");
+            return View("Access", "Register");
         }
 
         // GET: KhachHangs/Edit/5

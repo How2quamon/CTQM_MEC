@@ -4,6 +4,7 @@ using CTQM_MEC.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CTQM_MEC.Migrations
 {
     [DbContext(typeof(CTQMDbContext))]
-    partial class CTQMDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221217144600_ctqmdb3")]
+    partial class ctqmdb3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

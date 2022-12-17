@@ -20,17 +20,16 @@
             <div class="social-icons">
                 <img src="~/images/login/mercedes-logo-png-mercedes-benz-logo-vector-icons-and-png-17.png">
             </div>
-            <form asp-controller="Access" asp-action="Login" method="post" id="Login" class="input-group">
+            <form asp-controller="Access" asp-action="Check" method="post" id="Login" class="input-group">
                 <input type="email" asp-for="Email" class="input-field" placeholder="You're Email Here" required>
                 <input type="password" asp-for="Password" class="input-field" placeholder="Enter Password" required>
                 <input type="checkbox" asp-for="KeepLogedIn" class="check-box"><span>Keep me Loged in</span>
-                <button type="submit" class="submit-btn">LOG IN</button>
                 @if(ViewData["ValidateMessage"] != null)
                 {
-                    <br/>
+                    <span style="color: red;">@ViewData["ValidateMessage"]</span>
                     <br />
-                    <label>@ViewData["ValidateMessage"]</label>
                 }
+                <button type="submit" class="submit-btn">LOG IN</button>
             </form>
             <form asp-controller="KhachHangs" asp-action="SignUp" method="post" id="Register" class="input-group">
                 <input type="email" asp-for="NewEmail" class="input-field" placeholder="Your Email" required>

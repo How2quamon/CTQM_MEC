@@ -1,0 +1,36 @@
+﻿@model CTQM_MEC.Models.VMLogin;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/css/login.css" rel="stylesheet" />
+    <title>OTP Veri</title>
+</head>
+<body>
+    <div class="hero">
+        <div class="form-box">
+            <span>@ViewData["UserLoginName"]</span>
+                <span>Click button if you don't see any OTP</span>
+            <div class="button-box">
+                <div id="btnVeri"></div>
+                <button type="button" class="toggle-btn">OTP Verification</button>
+            </div>  
+            <div class="social-icons">
+                <img src="~/images/login/mercedes-logo-png-mercedes-benz-logo-vector-icons-and-png-17.png">
+            </div>
+            <form asp-controller="Access" asp-action="Login" method="post" id="Login" class="input-group">
+                <input type="text" class="input-field" placeholder="Enter your OPT" required>
+                <button type="submit" class="submit-btn">LOG IN</button>
+                @if (ViewBag.Message != null) {
+                    var data = ViewBag.Message;
+                    <input type="email" asp-for="Email" value=@data.Email style="display: none">
+                    <input type="password" asp-for="Password" value=@data.Password style="display: none">
+                    <input type="checkbox" asp-for="KeepLogedIn" value=@data.KeepLogedIn style="display: none">
+                }
+            </form>
+        </div>
+    </div> 
+</body>
+</html>
