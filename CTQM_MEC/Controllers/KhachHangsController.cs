@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using CTQM_Car.Data;
 using CTQM_MEC.Data;
+using CTQM_Car.Data;
+using CTQM_MEC.Models;
 
 namespace CTQM_MEC.Controllers
 {
@@ -63,6 +64,25 @@ namespace CTQM_MEC.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(khachHang);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SignUp(VMLogin newKH)
+        {
+            if (ModelState.IsValid)
+            {
+                KhachHang kh = new KhachHang();
+                kh.TenKhachHang = newKH.NewName;
+                kh.SDT = newKH.NewPhone;
+                kh.DiaChi = "";
+                kh.NgaySinh = DateTime.Today;
+                kh.GiayPhepLaiXe = "";
+                _context.Add(kh);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View("Access", "Login");
         }
 
         // GET: KhachHangs/Edit/5
