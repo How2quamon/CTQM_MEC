@@ -22,5 +22,6 @@ namespace CTQM_Car.Data
         [Required]
         public double GiaThanh { get; set; }
         public string? MoTa { get; set; }
+
     }
 }

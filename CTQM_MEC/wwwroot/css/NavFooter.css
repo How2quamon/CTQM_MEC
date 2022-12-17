@@ -787,3 +787,14 @@ ul {
         width: 50%;
     }
 }
+
+.c-product-tile__promo {
+    background-color: red;
+    color: white;
+    font-size: 12px;
+    line-height: 1;
+    padding: 4px;
+    position: absolute;
+    top: 0;
+    left: 0l;
+}

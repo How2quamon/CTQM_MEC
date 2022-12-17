@@ -112,6 +112,7 @@ if (detailsBtn) {
     const detailsBody = document.querySelector(".drawer-body");
     const toogleDetail = () => {
         detailsBody.classList.toggle("active");
+        detailsBtn.classList.toggle("active");
     }
     detailsBtn.addEventListener("click", toogleDetail);
 }

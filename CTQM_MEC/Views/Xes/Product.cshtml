@@ -1,0 +1,81 @@
+﻿@model CTQM_MEC.Models.XeModelView
+
+@{
+    ViewData["Title"] = "Mercedes-Benz";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/css/product.css" rel="stylesheet" />
+    <title>CTQM-Car</title>
+</head>
+<body>
+    <div id="page-product">
+        <div class="page-container">
+            <h1 class="car__heading">CTQM Mercedes-Benz</h1>
+            <div class="car__container">
+                @if (Model != null && Model.type != null)
+                {
+                    <h2 class="type-car__title">@Model.type</h2>
+                }
+                else
+                {
+                    <h2 class="type-car__title">New Arrival</h2>
+                }
+                <ul class="car__list">
+                    @if (Model != null && Model.DanhSachXe != null)
+                    @foreach (var item in Model.DanhSachXe)
+                    {
+                            @if (item.SoLuong <= 0)
+                            {
+                                <span class="c-product-tile__promo">Sold out</span>
+                            }
+                            <li class="car__item">
+                            <div class="car-item__container">
+                                <div class="car-item__images">
+                                    <a asp-action="Shopping" asp-route-id="@item.MaXe" class="car-item__images-link" title="car1">
+                                        <img src="~/images/car/@item.TenXe/1.png" alt="car1" class="car-item__image primary-image">
+                                        <img src="~/images/car/@item.TenXe/2.png" alt="car1" class="car-item__image second-image">
+                                    </a>
+                                </div>
+                                <div class="car-item__link">
+                                    <a asp-action="Shopping" asp-route-id="@item.MaXe" class="car-item__link-details">View Details</a>
+                                </div>
+                            </div>
+                            <div class="car-item__name">
+                                <div class="car-item__name-details">
+                                    <div class="car-item__name-links">
+                                        <a asp-action="Shopping" asp-route-id="@item.MaXe" class="car-item__name-link">@item.TenXe</a>
+                                    </div>
+                                    <div class="car-item__name-prices">
+                                        <p class="car-item__name-price">@item.GiaThanh VND</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    var items = document.querySelectorAll(".car__item");
+    items.forEach(item => {
+        var itemLink = item.querySelector(".car-item__link");
+        var itemImage = item.querySelector(".car-item__image.second-image")
+        item.onmouseenter = () => {
+            itemLink.classList.add('active');
+            itemImage.classList.add('active');
+        }
+        item.onmouseleave = () => {
+            itemLink.classList.remove('active');
+            itemImage.classList.remove('active');
+        }
+    });
+</script>
+</html>
