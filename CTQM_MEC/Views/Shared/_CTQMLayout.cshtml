@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
@@ -29,7 +30,7 @@
 			<li><a class="header__nav__btn" href="#">shop</a></li>
 			@if (Context.User.Identity.IsAuthenticated) 
 			{
-				<li><a class="header__nav__btn" asp-area="" asp-controller="Home" asp-action="LogOut">Logout</a></li>
+				<li><a class="header__nav__btn">@Context.User.FindFirst(ClaimTypes.NameIdentifier).Value</a></li>
 			}
 			else 
 			{
@@ -49,6 +50,9 @@
 			<li><a class="header__nav__btn" asp-controller="xes" asp-action="Product" asp-route-type="Mercedes-AMG" >Mercedes-AMG</a></li>
 			<li><a class="header__nav__btn" asp-controller="xes" asp-action="Product" asp-route-type="Coupé" >Coupé</a></li>
 			<li><a class="header__nav__btn" asp-controller="xes" asp-action="Product" asp-route-type="Mercedes-Maybach" >Mercedes-Maybach</a></li>
+			@if (Context.User.Identity.IsAuthenticated) {
+				<li><a class="header__nav__btn" asp-area="" asp-controller="Home" asp-action="LogOut">Logout</a></li>
+			}
 		</ul>
 	</nav>
 
