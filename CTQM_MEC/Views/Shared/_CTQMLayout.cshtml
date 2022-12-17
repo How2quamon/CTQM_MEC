@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width" />
+	<title>CTQM Car</title>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@700&family=Mohave:wght@700&family=Montserrat:wght@100;200;300;400;500;600;700&family=Nothing+You+Could+Do&display=swap" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.1.2/fullpage.min.css" integrity="sha512-4rPgyv5iG0PZw8E+oRdfN/Gq+yilzt9rQ8Yci2jJ15rAyBmF0HBE4wFjBkoB72cxBeg63uobaj1UcNt/scV93w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="~/css/NavFooter.css" rel="stylesheet" />
+</head>
+
+<body>
+	<div class="blur__overlay"></div>
+
+	<header class="header">
+		<a class="header__left" href="#">
+			<img class="header__logo" src="~/images/ctqm_logo.png" alt="" />
+		</a>
+
+		<ul class="header__middle">
+			<li>
+			<li><a class="header__nav__btn" href="#">Model S</a></li>
+			<li><a class="header__nav__btn" href="#">Model 3</a></li>
+			<li><a class="header__nav__btn" href="#">Model X</a></li>
+			<li><a class="header__nav__btn" href="#">Model Y</a></li>
+			<li><a class="header__nav__btn" href="#">solar roof</a></li>
+			<li><a class="header__nav__btn" href="#">solar panels</a></li>
+			</li>
+		</ul>
+
+		<ul class="header__right">
+			<li>
+				<div class="search-container">
+					<form action="/search" method="get">
+						<input class="search expandright" id="searchright" type="search" name="q" placeholder="Search">
+						<label class="header__nav__btn search_btn" for="searchright"><span class="mglass">&#9906;</span></label>
+					</form>
+				</div>
+			</li>
+			<li><a class="header__nav__btn" href="#">shop</a></li>
+			<li><a class="header__nav__btn" href="#">account</a></li>
+			<li><a class="menu__btn header__nav__btn" href="#">menu</a></li>
+		</ul>
+	</header>
+
+	<nav class="navigation">
+		<div class="close__btn__container">
+			<img class="navigation__close__btn" src="https://thatanjan.github.io/tesla-clone-yt/media/close_icon.svg" alt="" />
+		</div>
+
+		<ul>
+			<li class="link__in__middle"><a class="nav__link" href="#">Model S</a></li>
+			<li class="link__in__middle"><a class="nav__link" href="#">Model 3</a></li>
+			<li class="link__in__middle"><a class="nav__link" href="#">Model X</a></li>
+			<li class="link__in__middle"><a class="nav__link" href="#">Model Y</a></li>
+			<li class="link__in__middle">
+				<a class="nav__link" href="#">Solar roofs</a>
+			</li>
+			<li class="link__in__middle">
+				<a class="nav__link" href="#">Solar panels</a>
+			</li>
+			<li><a class="nav__link" href="#">Existing Inventory </a></li>
+			<li><a class="nav__link" href="#">Used Inventory </a></li>
+			<li><a class="nav__link" href="#">Trade-In </a></li>
+			<li><a class="nav__link" href="#">Test drive </a></li>
+			<li><a class="nav__link" href="#">Powerwall </a></li>
+			<li><a class="nav__link" href="#">Commercial Energy </a></li>
+			<li><a class="nav__link" href="#">utilities </a></li>
+			<li><a class="nav__link" href="#">Charging</a></li>
+			<li><a class="nav__link" href="#">Find us</a></li>
+			<li><a class="nav__link" href="#">Support</a></li>
+			<li><a class="nav__link" href="#">Investor Relations</a></li>
+		</ul>
+	</nav>
+
+	<section id="fullpage">
+		<section class="section number">
+			<div class="section__content">
+				<main role="main" class="pb-3">
+					@RenderBody()
+				</main>
+			</div>
+		</section>
+	</section>
+	<footer class="footer">
+		<ul>
+			<li><a href="#">CTQM © 2022</a></li>
+			<li><a href="#"> Privacy &amp; Legal </a></li>
+			<li><a href="#"> contact </a></li>
+			<li><a href="#">news</a></li>
+			<li><a href="#">engage</a></li>
+			<li><a href="#">locations</a></li>
+		</ul>
+	</footer>
+	<script src="~/js/NavFooter.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.1.2/fullpage.min.js" integrity="sha512-gSf3NCgs6wWEdztl1e6vUqtRP884ONnCNzCpomdoQ0xXsk06lrxJsR7jX5yM/qAGkPGsps+4bLV5IEjhOZX+gg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</body>
+</html>

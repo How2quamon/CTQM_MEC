@@ -1,0 +1,60 @@
+﻿@model CTQM_Car.Data.ThongTinChiTietXe
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>ThongTinChiTietXe</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Xe)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Xe.HangXe)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Head1)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Head1)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Title1)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Title1)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Head2)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Head2)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Title2)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Title2)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Head3)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Head3)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Title3)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Title3)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.MaThongTin">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

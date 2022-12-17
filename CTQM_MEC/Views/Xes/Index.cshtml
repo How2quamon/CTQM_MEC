@@ -1,0 +1,71 @@
+﻿@model IEnumerable<CTQM_Car.Data.Xe>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TenXe)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HangXe)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhanKhuc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LoaiDongCo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SoLuong)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GiaThanh)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MoTa)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenXe)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HangXe)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhanKhuc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LoaiDongCo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoLuong)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GiaThanh)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MoTa)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.MaXe">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.MaXe">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.MaXe">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

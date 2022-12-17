@@ -1,0 +1,53 @@
+﻿@model IEnumerable<CTQM_Car.Data.GiaoDich>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.KhachHang)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Xe)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SoLuongMua)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TongTien)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.KhachHang.GiayPhepLaiXe)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Xe.HangXe)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoLuongMua)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TongTien)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.MaGiaoDich">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.MaGiaoDich">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.MaGiaoDich">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

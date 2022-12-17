@@ -1,0 +1,292 @@
+:root {
+    font-size: 100%;
+    font-size: 16px;
+    line-height: 1.5;
+}
+body {
+    background: url('/images/signup/Mercedes-E300.jpeg'); 
+    padding: 0;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 500;
+    background-size: cover;
+    background-repeat: no-repeat;
+} 
+h2 {
+    font-size: 1.5rem;
+    font-weight:700;
+    letter-spacing: 5px;
+    line-height: 1.5;
+}
+a{
+    text-decoration: none;
+    color:#233975;
+}
+a:hover {
+    text-decoration: underline;
+}
+/* ---------------------------------------------HEADER--------------------------------------------- */ 
+/* ---------------------------------------------Navigation--------------------------------------------- */
+#navigation{
+    background-color: #9E5449;
+    height: 50px;
+    position: fixed;
+    padding: 0 200px;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    z-index: 1;
+    transition: 0.2s;
+}
+.login a{
+    color:rgb(0, 0, 0);
+}
+/* #nav, .subnav{
+    list-style-type: none;
+}
+
+#nav > li{
+    display: inline-block;
+}
+#nav li{
+    position: relative;
+}
+
+#nav > li > a{
+    color: #fff;
+}
+
+.show #nav li{
+    color: #fff;
+}
+
+#nav li a{
+    color: white;
+    text-decoration: none;
+    line-height: 79px;
+    font-size: 18px;
+    padding: 0 25px;
+    display: inline-block;
+}
+
+#nav li:hover .subnav{
+    display: block;
+}
+
+#nav > li:hover > a{
+    color: #3D1F1D;
+}
+
+#nav .subnav{
+    display: none;
+    width: auto;
+    min-width: 200px;
+    top: 68%;
+    left: 0;
+    position: absolute;
+    background-color: #fff;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #000;
+    transition: 0.3s;
+}
+
+#nav{
+    display: inline-block;
+    height: 79px;
+}
+
+#nav .subnav a{
+    color: #000;
+    padding: 0 12px;
+    line-height: 50px;
+}
+
+#nav .nav-arrow-down{
+    font-size: 14px;
+} */
+
+#navigation .search-btn{
+    float: right;
+    padding: 0 20px;
+    margin-right: 100px;
+}
+
+#navigation .search-btn:hover{
+    background-color: rgba(234, 151, 99, 0.3);
+    cursor: pointer;
+}
+
+#navigation .search-icon{
+    color: #fff;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 79px;
+
+}
+#navigation .login{
+    float: right;
+    font-size: 18px;
+    line-height: 50px;
+    padding: 0px 21px;
+    color: #fff;
+    
+}
+
+#navigation .login:hover{
+    background-color: rgba(234, 151, 99, 0.3);
+    cursor: pointer;
+}
+
+#nav .CTQM--logo {
+    font-weight: 700;
+    letter-spacing: 5px;
+    font-size: 25px;
+}
+
+#nav .subnav li:hover {
+    background-color: #139487;
+}
+.small {
+    font-size: 80%;
+    text-align:center;
+}
+/* ---------------------------------------------SIGN UP--------------------------------------------- */ 
+.Signup {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 50px;
+    /* margin-left: 161px; */
+
+}
+.Signup .copy {
+    color:black;
+    text-align: center;
+}
+.Signup .copy p{
+    margin: 1.5em 0;
+    font-size: 0.875rem;
+
+}
+.Signup form {
+    /* width:328px; */
+    background: rgba(0, 0, 0, 0.0);
+    width:400px;
+    /* padding: 30px 30px 40px; */
+    border-radius: 20px;
+    padding-top: 29px;
+    padding-left: 36px;
+}
+form input[type="text"],
+form input[type="email"],
+form input[type="password"] {
+    display: block;
+    width:100%;
+    box-sizing: border-box;
+    border-radius: 8px;
+    border: 1px solid #c4c4c4;
+    padding:1em;
+    margin-bottom: 1.25rem;
+    font-size: 0.875rem;
+    background: rgba(0, 0, 0, 0.1);
+}
+label {
+    display: block;
+    margin-bottom: 01rem;
+    font-size: 1rem;
+}
+.input-container .password i{
+    position:absolute;
+    top:42px;
+    right:16px;
+}
+.input-container .password {
+    position:relative;
+}
+/* .input-container .password i {
+    
+} */
+.checkbox-container input {
+    position:absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width:0;
+}
+.checkbox-container {
+    display:block;
+    position:relative;
+    padding-left: 2rem;
+    cursor: pointer;
+    user-select:none;
+    margin:0 0 1.25rem 0;
+}
+.checkbox-container input:checked~.checkmark {
+    background-color: #233975;
+    border:1px solid #233975;
+}
+.checkmark {
+    position:absolute;
+    width: 24px;
+    height: 24px;
+    background: white;
+    border:1px solid #c4c4c4;
+    border-radius: 2px;
+    top:-4px;
+    left: 0;
+}
+.checkmark::after {
+    content:"";
+    position:absolute;
+    display:none;
+
+}
+.checkbox-container input:checked~ .checkmark:after {
+    display:block;
+}
+.checkbox-container .checkmark:after {
+    border:solid white;
+    border-width: 0 3px 3px 0;
+    width:5px;
+    height: 10px;
+    left:8px;
+    top:4px;
+    transform: rotate(45deg);
+}
+.signup-btn {
+    display: block;
+    width:100%;
+    background:#9E5449;
+    color:white;
+    font-weight:700;
+    border:none;
+    padding:1rem;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.signup-btn:hover {
+    background:#3D1F1D;
+    cursor:pointer;
+}
+
+@media (max-width: 1024px){
+    .Signup {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-top: 100px;
+        /* padding-right: 10px; */
+        padding-left: 28px;
+    }
+}
+@media (max-width:760px){ 
+    .Signup form {
+
+    padding-right: 50px;
+    padding-left: 16px;
+    padding-top: 10px;
+    }
+}
