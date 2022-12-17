@@ -1,11 +1,18 @@
 using CTQM_MEC.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<CTQMDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("MyDB")));
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(option =>
+{
+    option.LoginPath = "/Access/Login";
+    option.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+});
 
 var app = builder.Build();
 
@@ -21,6 +28,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
