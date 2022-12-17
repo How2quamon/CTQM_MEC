@@ -1,32 +1,63 @@
 ﻿@model CTQM_MEC.Models.VMLogin;
-@{
-    Layout = null;
-}
 
-<! DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/css/login.css" rel="stylesheet" />
+    <title>Log in</title>
+</head>
+<body>
+    <div class="hero">
+        <div class="form-box">
+            <div class="button-box">
+                <div id="btn"></div>
+                <button type="button" class="toggle-btn" onclick="Login()">Log In</button>
+                <button type="button" class="toggle-btn" onclick="Register()">Register</button>
+            </div>  
+            <div class="social-icons">
+                <img src="~/images/login/mercedes-logo-png-mercedes-benz-logo-vector-icons-and-png-17.png">
+            </div>
+            <form asp-controller="Access" asp-action="Login" method="post" id="Login" class="input-group">
+                <input type="email" asp-for="Email" class="input-field" placeholder="You're Email Here" required>
+                <input type="password" asp-for="Password" class="input-field" placeholder="Enter Password" required>
+                <input type="checkbox" asp-for="KeepLogedIn" class="check-box"><span>Keep me Loged in</span>
+                <button type="submit" class="submit-btn">LOG IN</button>
+                @if(ViewData["ValidateMessage"] != null)
+                {
+                    <br/>
+                    <br />
+                    <label>@ViewData["ValidateMessage"]</label>
+                }
+            </form>
+            <form asp-controller="KhachHangs" asp-action="SignUp" method="post" id="Register" class="input-group">
+                <input type="email" asp-for="NewEmail" class="input-field" placeholder="Your Email" required>
+                <input type="password" asp-for="NewPassword" class="input-field" placeholder="Your Password" required>
+                <input type="text" asp-for="NewName" class="input-field" placeholder="Your Name" required>
+                <input type="tel" asp-for="NewPhone" class="input-field" placeholder="Your Phone" required>
+                <input type="checkbox" class="check-box" required><span>I agree to the terms & conditions</span>
+                <button type="submit" class="submit-btn">REGISTER</button>
+            </form>
+        </div>
+    </div> 
+    <script>
+        var x = document.getElementById("Login");
+        var y = document.getElementById("Register");
+        var z = document.getElementById("btn");
 
-<html>
-    <head>
-        <meta name="viewport" content="width=device-width" />
-        <title>Login</title>
-    </head>
-    <body>
-        <form asp-controller="Access" asp-action="Login" method="post">
-            <h1>Login</h1>
-            <input type="email" placeholder="email" asp-for="Email" />
-            <input type="password" placeholder="password" asp-for="Password" />
-            
-            <label>
-                <input type="checkbox" asp-for="KeepLogedIn" />
-                Keep me Loged in
-            </label>
-            <button type="submit">Login</button>
-            @if(ViewData["ValidateMessage"] != null)
-            {
-                <br/>
-            <br />
-            <label>@ViewData["ValidateMessage"]</label>
-            }
-        </form>
-    </body>
+        function Register(){
+            x.style.left = "-400px";
+            y.style.left = "50px";
+            z.style.left = "110px";
+        }
+        function Login(){
+            x.style.left = "50px";
+            y.style.left = "450px";
+            z.style.left = "0px";
+        }
+
+    </script>
+</body>
 </html>

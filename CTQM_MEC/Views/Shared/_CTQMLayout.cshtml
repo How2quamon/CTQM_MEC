@@ -14,7 +14,7 @@
 
 	<header class="header">
 		<a class="header__left" href="/home">
-			<img class="header__logo" src="~/images/ctqm_logo.png" alt="" />
+			<img class="header__logo" src="~/images/CTQM_logo.png" alt="" />
 		</a>
 
 		<ul class="header__right">
@@ -27,8 +27,15 @@
 				</div>
 			</li>
 			<li><a class="header__nav__btn" href="#">shop</a></li>
-			<li><a class="header__nav__btn" href="#">account</a></li>
-			<li><a class="menu__btn header__nav__btn" href="#">menu</a></li>
+			@if (Context.User.Identity.IsAuthenticated) 
+			{
+				<li><a class="header__nav__btn" asp-area="" asp-controller="Home" asp-action="LogOut">Logout</a></li>
+			}
+			else 
+			{
+				<li><a class="header__nav__btn" asp-controller="access" asp-action="Login">account</a></li>
+			}
+			<li><a class="menu__btn header__nav__btn">menu</a></li>
 		</ul>
 	</header>
 
@@ -38,7 +45,7 @@
 		</div>
 		<ul>
 			<li><a class="header__nav__btn" asp-controller="xes" asp-action="Product" >New Arrival</a></li>
-			<li><a class="header__nav__btn" asp-controller="xes" asp-action="Product" asp-route-type="Mercedes-EQ">Mercedes-EQ</a></li>
+			<li><a class="header__nav__btn" asp-controller="xes" asp-action="Product" asp-route-type="Mercedes-EQ" >Mercedes-EQ</a></li>
 			<li><a class="header__nav__btn" asp-controller="xes" asp-action="Product" asp-route-type="Mercedes-AMG" >Mercedes-AMG</a></li>
 			<li><a class="header__nav__btn" asp-controller="xes" asp-action="Product" asp-route-type="Coupé" >Coupé</a></li>
 			<li><a class="header__nav__btn" asp-controller="xes" asp-action="Product" asp-route-type="Mercedes-Maybach" >Mercedes-Maybach</a></li>

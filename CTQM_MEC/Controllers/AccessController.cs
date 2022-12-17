@@ -22,8 +22,7 @@ namespace CTQM_MEC.Controllers
         public async Task<IActionResult> Login(VMLogin modelLogin)
         {
             if (modelLogin.Email == "user@example.com" &&
-                modelLogin.Password == "123"
-               )
+                modelLogin.Password == "123")
             {
                 List<Claim> claims = new List<Claim>()
                     {
