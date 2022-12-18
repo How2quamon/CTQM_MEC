@@ -81,7 +81,7 @@ namespace CTQM_MEC.Controllers
                     ViewBag.Message = modelLogin;
                     string phone = "+84" + CKh[i].SDT;
                     ViewBag.Phone = phone;
-                    SendVeri(phone);
+                   // SendVeri(phone);
                     return View("2FA");
                 }
             }
@@ -108,7 +108,7 @@ namespace CTQM_MEC.Controllers
                         break;
                     }
                 }
-                if (tmp != null && smscode != null && CheckVeri(smscode, phone))
+                if (tmp != null) //&& smscode != null && CheckVeri(smscode, phone)
                 {
                     List<Claim> claims = new List<Claim>()
                     {

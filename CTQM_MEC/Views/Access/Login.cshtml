@@ -26,6 +26,7 @@
                 <input type="checkbox" asp-for="KeepLogedIn" class="check-box"><span>Keep me Loged in</span>
                 @if(ViewData["ValidateMessage"] != null)
                 {
+                    <br />
                     <span style="color: red;">@ViewData["ValidateMessage"]</span>
                     <br />
                 }

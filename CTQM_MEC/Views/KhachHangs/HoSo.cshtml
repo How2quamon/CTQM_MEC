@@ -1,0 +1,392 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link href="~/css/hoso.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@700&family=Mohave:wght@700&family=Montserrat:wght@100;200;300;400;500;600;700&family=Nothing+You+Could+Do&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sco.js/1.1.0/css/scojs.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="profile row">
+            <div class="col-md-3">
+                <div class="profile-sidebar">
+                    <!-- SIDEBAR USERPIC -->
+                    <div class="profile-userpic">
+                        <!-- {{url('profile')}}/img/user.png -->
+                        <img src="~/images/profile/user.jpg" class="img-responsive" alt="">
+                    </div>
+                    <!-- END SIDEBAR USERPIC -->
+                    <!-- SIDEBAR USER TITLE -->
+                    <div class="profile-usertitle">
+                        <div class="profile-usertitle-name">
+                            <!-- {{$user->user_name}} -->
+                            Danielle de La Fontaine
+                        </div>    
+                    </div>
+                    <div class="profile-usermenu">
+                        <ul class="nav">
+                            <li class="active">
+                                <a href="#">
+                                <i class="glyphicon glyphicon-home"></i>
+                                Overview </a>
+                            </li>
+                            <li>
+                                <a href="#" data-toggle="modal" data-target="#editProfile">
+                                <i class="glyphicon glyphicon-user"></i>
+                                Edit Profile </a>
+                            </li>
+                            <li>
+                                <a href="#" data-toggle="modal" data-target="#payment">
+                                <i class="glyphicon glyphicon-credit-card"></i>
+                                Payment </a>
+                            </li>
+                            <li>
+                                <a href="#" data-toggle="modal" data-target="#changePassword">
+                                <i class="glyphicon glyphicon-lock"></i>
+                                Change Password </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- END MENU -->
+                   
+                    <div class="portlet light bordered">
+                        <div>
+                            <h4 class="profile-desc-title">ABOUT ME</h4>
+                            <span class="profile-desc-text"> May the Force be with you. </span>                            
+                            <div class="margin-top-20 profile-desc-link">
+                                <i class="fa fa-twitter"></i>
+                                <a href="https://www.twitter.com/">soullenf_1812</a>
+                            </div>
+                            <div class="margin-top-20 profile-desc-link">
+                                <i class="fa fa-facebook"></i>
+                                <a href="https://www.facebook.com/">Ngoc Minh</a>
+                            </div>
+                        </div>
+                    </div>                   
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="profile-content">
+                    <div class="right_inner">
+                        <div class="history" >
+                            <div class="history_ShopImageBox">
+                              <img class="history_ShopImage" src="https://tapchisieuxe.com/wp-content/uploads/2021/07/Mercedes-AMG-G63-va-nhung-bo-ao-dac-biet-dau-la-mau-sac-dat-nhat-tai-Viet-Nam-1.jpg" alt="Tesla Shop">
+                            </div>
+                            <div class="history_ShopTextWithButton history_TextWithButton">
+                              <div class="history_ShopText">
+                                <p>View all shop transactions<span><a class="view_btn" href="#" >View</a></span></p>
+                                
+                              </div>
+                              
+                            </div>
+                        </div>    
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <!-- Modal edit profile-->
+    <div class="modal fade" id="editProfile" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <button type="button" class="close" data-dismiss="modal"><i class="icon-xs-o-md"></i></button>
+                <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"><strong><center>PERSONAL INFORMATION</center></strong></h4>
+                </div>
+                <div class="modal-body">                    
+                    <div class="row justify-content-center">                        
+                            <form action="{{url('/updateUser')}}"  method="POST">
+                                <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-12 col-xs-12 edit_information">                                
+                                    <div class="row">
+                                        <div class="text-center">
+                                            <div class="avatar-upload">
+                                                <div class="avatar-edit">
+                                                    <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" />
+                                                    <label for="imageUpload"></label>
+                                                </div>
+                                                <div class="avatar-preview">
+                                                <div id="imagePreview" style="background-image: url('~/images/profile/user2.jpg');">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">                                    
+                                        <div class="form-group">
+                                            <label class="profile_details_text">First Name:</label>
+                                            <input type="text" name="first_name" class="form-control" value="" required >
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="profile_details_text">Last Name: </label>
+                                            <input type="text" name="last_name" class="form-control" value="" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="profile_details_text">Email Address:</label>
+                                            <input type="email" name="email" class="form-control" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="profile_details_text">Mobile Number:</label>
+                                            <input type="tel" name="phone" class="form-control" value="" required pattern=[0-9]{10}>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="profile_details_text">Date Of Birth:</label>
+                                            <input type="date" name="birthday" class="form-control" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="profile_details_text">Gender:</label>
+                                            <select name="gender" class="form-control" value="" required>
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Female</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>  
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="profile_details_text">Address:</label>
+                                            <input type="email" name="email" class="form-control" value="" required>
+                                        </div>
+                                    </div>
+                                </div>                              
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 submit">
+                                        <div class="text-center">
+                                            <!--  -->
+                                            <button type="submit" class="btn btn-primary" value="save">Save</button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </form>
+                         
+                    </div>                              
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal payment-->
+    <div class="modal fade" id="payment" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <button type="button" class="close" data-dismiss="modal"><i class="icon-xs-o-md"></i></button>
+                <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"><strong><center>SELECT PAYMENT</center></strong></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row justify-content-center">
+                            <form action="{{url('/updateCash')}}" method="post">
+                                <!-- csrf -->
+                                <div class="col-md-12 col-sm-12 p-10" id="payment_gateways">                                    
+                                    <div class="tp-payment-method">
+                                        <div class="row paypal_button" style="display: block;">
+                                            <label class="tp-payment-alt">
+                                                <!-- {{url('profile')}}/img/paypal.png -->
+                                                <input type="radio" name="payment_method" id="paypal" value="paypal" disabled>
+                                            <label for="paypal"><img src="~/images/profile/paypal.png" alt="Tutorialspoint"></label>
+                                                <p>Add <b>PayPal</b> .</p>
+                                            </label>
+                                        </div>
+                                        <div class="clear"></div>
+                                        <div class="row">
+                                            <label class="tp-payment-alt">
+                                                <input type="radio" name="payment_method" id="razorpay" value="razorpay" disabled> 
+                                               <span>
+                                                <!-- {{url('profile')}}/img/all-credit-card.png -->
+                                                <img src="~/images/profile/all-credit-card.png" alt="MasterCard" class="checkout-img">
+                                                </span>
+                                               <p>Add <b>Credit</b> / <b>Debit Card</b> / <b>Net Banking</b> / <b>UPI</b>/ Others </p>
+                                            </label>											
+                                        </div>
+                                        <div class="clear"></div>                                                                
+                                        </div>
+                                    </div>
+                                <div class="col-md-12 col-sm-12 summary-checkout">
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary">Checkout</button>
+                                        <!-- <button type="button" class="btn btn-checkout" value="cancelPayment">Cancel</button> -->
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                    </div>
+                                </div>
+                            </form>                        
+                    </div>                                
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal change password-->
+    <div class="modal fade" id="changePassword" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <button type="button" class="close" data-dismiss="modal"><i class="icon-xs-o-md"></i></button>
+                <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"><strong><center>CHANGE PASSWORD</center></strong></h4>
+                </div>
+                <div class="modal-body">                    
+                    <div class="row justify-content-center">                        
+                            <form action="{{}}"  method="POST">
+                                <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-12 col-xs-12 edit_information">                                 
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="profile_details_text">Enter old password:</label>
+                                            <input type="password" name="oldPassword" class="form-control" value="" required id="oldPassword">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="profile_details_text">Enter new password:</label>
+                                            <input type="password" class="form-control" value="" required id="password1">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="profile_details_text">Confirm new password:</label>
+                                            <input type="password" class="form-control" value="" required id="password2">
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 submit">
+                                        <div class="text-center">
+                                            <!--  -->
+                                            <button type="submit" class="btn btn-primary" value="save">Save</button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>                               
+                            </div>
+                        </form>
+                         
+                    </div>                              
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        //upload avatar
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#imagePreview').css('background-image', 'url('+e.target.result +')');
+                    $('#imagePreview').hide();
+                    $('#imagePreview').fadeIn(650);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $("#imageUpload").change(function() {
+            readURL(this);
+        });
+        //prevent modal closure by clicking outside & press esc
+        $('#editProfile').modal({
+            backdrop: 'static', 
+            keyboard: false
+        });
+        $('#payment').modal({
+            backdrop: 'static', 
+            keyboard: false
+        });
+        $('#changePassword').modal({
+            backdrop: 'static', 
+            keyboard: false
+        })
+        //prevent modals from automatically loading   
+        $(document).ready(function() {
+            $('#editProfile').modal('hide');
+            $('#payment').modal('hide');
+            $('#changePassword').modal('hide');
+        });
+        //password validation
+        jQuery.validator.setDefaults({
+            debug: true,
+            success: "valid"
+        });
+
+// function to validate first password
+
+        $.validator.addMethod("pwcheck", function(value) {
+        return /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!#\$%\^&\*])(?=.{8,})/.test(value)
+        });
+
+        $( "#changePassword" ).validate({
+            rules: {
+                password1:{
+                required:true,
+                minlength:8,
+                pwcheck:true
+                },
+                password2:{
+                minlength:8,
+                equalTo :'#password1'
+                }
+            }
+        });
+    </script>
+</body>
+
+<!-- <script>
+    // Lấy edit profile
+    var edit = document.querySelector('button[value="edit-profile"]');
+    edit.onclick = function(){
+        document.querySelector('.js-modal').setAttribute("style", "");
+    }
+
+    // Tắt edit profile
+    var editCancel = document.querySelector('button[value="cancelProfile"]');
+    editCancel.onclick = function() {
+        document.querySelector('.js-modal').setAttribute("style", "display: none;");
+    }
+
+    // Lấy payment
+    var payment = document.querySelector('button[value="payment"]');
+    payment.onclick = function(){
+        document.querySelector('.payment-wrapper').setAttribute("style", "");
+    }
+
+    var paymentCancel = document.querySelector('button[value="cancelPayment"]');
+    paymentCancel.onclick = function() {
+        document.querySelector('.payment-wrapper').setAttribute("style", "display: none;");
+    }
+    
+</script> -->
+</html>
