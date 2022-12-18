@@ -1,0 +1,155 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Carrt</title>
+    <link rel="stylesheet" type="text/css" href="cart.css">
+    <link href="~/css/giohang.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="page">
+        <div id="cart" class="cart-page commerce-apple-pay-data" data-environment="prod" data-enable-edit-size-in-cart="false">
+            <div class="cart__container tds-content_container" style="margin-top:50px; height:500px;">
+                <div class="cart__header ">
+                    <h2>Cart</h2>
+                </div>
+                <div class="tds-flex tds-flex-gutters line-item-and-order">
+                    <div class="tds-flex-item">
+                        <div class="lineitems__container">
+                            <div class="lineitem__container tds-flex tds-flex-gutters">
+                                <div class="lineitem__main-info">
+                                    <div class="lineitem__image tds-flex-item">
+                                        <img src="https://digitalassets-shop.tesla.com/image/upload/f_auto,q_auto/v1/content/dam/tesla/studio/CAR_ACCESSORIES/MODEL_S/INTERIOR/1669541-00-A_0_2000.jpg" alt="Model S All-Weather Interior Liners">
+                                    </div>
+                                    <div class="lineitem__data tds-flex-item">
+                                        <p class="lineitem__name tds-text--500" id="0-1669541-00-A">Model S All-Weather Interior Liners</p>
+                                        <p class="lineitem__option-display-name">Model S</p>
+                                        <div class="lineitem__qty">
+                                            <div class="lineitem__editable-item">
+                                                <span>Quantity: </span>
+                                                <div class="lineitem__dropdown">
+                                                    <div class="tds-tooltip-wrapper tds-tooltip-wrapper--inline" aria-label="Quantity: " aria-describedby="0-1669541-00-A">
+                                                        <button style="border: none;" aria-haspopup="listbox" class="tds-dropdown-trigger" type="button">
+                                                            <div class="custom-select" style="width:50px;">
+                                                                <select>
+                                                                    <option value="0">1</option>
+                                                                    <option value="1">2</option>
+                                                                    <option value="2">3</option>
+                                                                    <option value="3">4</option>
+                                                                    <option value="4">5</option>
+                                                                    <option value="5">6</option>
+                                                                    <option value="6">7</option>
+                                                                    <option value="7">8</option>
+                                                                    <option value="8">9</option>
+
+                                                                </select>
+                                                            </div>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button style="border: none; border-bottom: 1px solid" class="w3-button w3-black w3-margin-bottom" onclick="document.getElementById('RemoveModal').style.display='block'">Remove</button>
+                                            <!-- phan trong remove -->
+                                            <div id="RemoveModal" class="modal js-modal" style="display: block;">
+                                                <div class="modal-container js-modal-container">
+                                                    <header class="modal-header">
+                                                        <span onclick="document.getElementById('RemoveModal').style.display='none'" class="button-close">×</span>
+
+                                                    </header>
+                                                    <div class="modal-body">
+                                                        <div class="tds-modal-header">
+                                                            <h2 style="margin: 0;">Remove Item</h2>
+                                                        </div>
+                                                        <section class="modal-label">
+                                                            <div>
+                                                                <p>Are you sure you want to remove this item from your cart?</p>
+                                                            </div>
+                                                        </section>
+                                                        <footer class="tds-modal-footer">
+                                                            <button id="Remove" aria-describedby="0-1669541-00-A">Yes, Remove</button>
+                                                        </footer>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="tds-modal-backdrop"></div>
+
+                                    </div>
+                                    <div class="lineitem__price tds-flex-item tds-flex--col_1of4">
+                                        <p class="tds-text--500" translate="no">$250.00</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="tds-flex-item">
+                        <div class="order-summary__container">
+                            <div class="order-summary__title">
+                                <h2 class="tds-text--h4">Order Summary</h2>
+                            </div>
+                            <div class="order-summary__info info">
+                                <div class="tds-tooltip-wrapper tds-tooltip-wrapper--inline">
+                                    <div>
+                                        <span>Shipping</span>
+                                    </div>
+                                    <div class="tds-tooltip tds-tooltip--closed" role="tooltip">
+                                        <p>FedEx Economy</p>
+                                    </div>
+                                </div>
+                                <span>Free</span>
+                            </div>
+                            <div class="order-summary__info info">
+                                <div class="tds-tooltip-wrapper tds-tooltip-wrapper--inline">
+                                    <div>
+                                        <span>Sales Tax</span>
+
+                                    </div>
+                                    <div class="tds-tooltip tds-tooltip--closed" role="tooltip">
+                                        <p>Sale tax is calculated with shipping address in checkout</p>
+                                    </div>
+                                </div>
+                                <span>Calculated at checkout</span>
+                            </div>
+                            <div class="price-summary-container">
+                                <div class="order-summary__info total">
+                                    <h2 class="tds-text--h4">Subtotal</h2>
+                                    <h2 class="tds-text--h4" translate="no">$250.00</h2>
+                                </div>
+                            </div>
+                            <div class="order-summary__info checkout-button">
+                                <div class="tds-btn_group tds-btn_group--vertical order-summary__info checkout">
+                                    <button class="tds-btn tds-btn--primary">Checkout</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+
+
+            // When the user clicks anywhere outside of the modal, close it
+            var modal = document.getElementById('RemoveModal');
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+
+        </script>
+
+</body>
+</html>
+
+
+
+
+
+
+
