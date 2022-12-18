@@ -20,6 +20,11 @@ namespace CTQM_MEC.Controllers
             _context = context;
         }
 
+        public async Task<IActionResult> Profile()
+        {
+            return View("HoSo");
+        }
+
         // GET: KhachHangs
         public async Task<IActionResult> Index()
         {
