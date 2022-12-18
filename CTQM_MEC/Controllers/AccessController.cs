@@ -104,6 +104,7 @@ namespace CTQM_MEC.Controllers
                         tmp.Email = CKh[i].Email;
                         tmp.Password = CKh[i].Password;
                         tmp.Name = CKh[i].TenKhachHang;
+                        tmp.MaKH = CKh[i].MaKhachHang;
                         phone = "+84" + CKh[i].SDT;
                         break;
                     }
@@ -113,6 +114,7 @@ namespace CTQM_MEC.Controllers
                     List<Claim> claims = new List<Claim>()
                     {
                        new Claim (ClaimTypes.NameIdentifier, tmp.Name),
+                       new Claim (ClaimTypes.SerialNumber, tmp.MaKH.ToString()),
                        new Claim (ClaimTypes.Role, "Customer"),
                     };
 

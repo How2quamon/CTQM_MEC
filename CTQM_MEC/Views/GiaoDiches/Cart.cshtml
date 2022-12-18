@@ -11,7 +11,7 @@
         <div id="cart" class="cart-page commerce-apple-pay-data" data-environment="prod" data-enable-edit-size-in-cart="false">
             <div class="cart__container tds-content_container" style="margin-top:50px; height:500px;">
                 <div class="cart__header ">
-                    <h2>Cart</h2>
+                    <h1>Cart</h1>
                 </div>
                 <div class="tds-flex tds-flex-gutters line-item-and-order">
                     <div class="tds-flex-item">
@@ -22,6 +22,18 @@
                                         <img src="https://digitalassets-shop.tesla.com/image/upload/f_auto,q_auto/v1/content/dam/tesla/studio/CAR_ACCESSORIES/MODEL_S/INTERIOR/1669541-00-A_0_2000.jpg" alt="Model S All-Weather Interior Liners">
                                     </div>
                                     <div class="lineitem__data tds-flex-item">
+                                        @if (ViewData["ResultBadMessage"] != null)
+                                        {
+                                            <br />
+                                            <label style="color: red;">@ViewData["ResultBadMessage"]</label>
+                                            <br />
+                                        }
+                                        @if (ViewData["ResultGoodMessage"] != null)
+                                        {
+                                            <br />
+                                            <label style="color: green;">@ViewData["ResultGoodMessage"]</label>
+                                            <br />
+                                        }
                                         <p class="lineitem__name tds-text--500" id="0-1669541-00-A">Model S All-Weather Interior Liners</p>
                                         <p class="lineitem__option-display-name">Model S</p>
                                         <div class="lineitem__qty">
@@ -50,7 +62,7 @@
                                             </div>
                                             <button style="border: none; border-bottom: 1px solid" class="w3-button w3-black w3-margin-bottom" onclick="document.getElementById('RemoveModal').style.display='block'">Remove</button>
                                             <!-- phan trong remove -->
-                                            <div id="RemoveModal" class="modal js-modal" style="display: block;">
+                                            <div id="RemoveModal" class="modal js-modal" style="display: none;">
                                                 <div class="modal-container js-modal-container">
                                                     <header class="modal-header">
                                                         <span onclick="document.getElementById('RemoveModal').style.display='none'" class="button-close">×</span>
@@ -72,7 +84,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
 
                                         <div class="tds-modal-backdrop"></div>
@@ -138,7 +149,7 @@
             var modal = document.getElementById('RemoveModal');
             window.onclick = function (event) {
                 if (event.target == modal) {
-                    modal.style.display = "none";
+                    modal.style.display = "block";
                 }
             }
 
@@ -146,10 +157,3 @@
 
 </body>
 </html>
-
-
-
-
-
-
-

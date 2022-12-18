@@ -61,6 +61,7 @@ namespace CTQM_MEC.Controllers
             ShopView.ListXe = await _context.Xe.ToListAsync();
             ShopView.XeDetails = xe;
             ShopView.MoreInfo = await _context.ThongTinChiTietXes.FindAsync(id);
+            ShopView.SoLuongTT = xe.SoLuong;
             return View(ShopView);
         }
 

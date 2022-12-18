@@ -7,6 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CTQM_Car.Data;
 using CTQM_MEC.Data;
+using CTQM_MEC.Models;
+using System.Security.Claims;
+using System.Web.WebPages;
+using Microsoft.AspNetCore.Authorization;
+using Twilio.TwiML.Voice;
 
 namespace CTQM_MEC.Controllers
 {
@@ -17,6 +22,60 @@ namespace CTQM_MEC.Controllers
         public GiaoDichesController(CTQMDbContext context)
         {
             _context = context;
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Shopping(int? id)
+        {
+            CartModelView cmv = new CartModelView();
+            if (id != null)
+            {
+                cmv.MaKhachHang = id;
+                double tong = 0;
+				var GH = from x in _context.Giaodichs
+                         where x.MaKhachHang == id
+						  select x;
+				List<GiaoDich> GHList = GH.ToList();
+                for (int i = 0; i < GHList.Count; i++)
+                {
+					var Car = await _context.Xe.FindAsync(GHList[i].MaXe);
+                    tong += Car.GiaThanh;
+					cmv.ListXe.Add(Car);
+                }
+                return View("Cart", cmv);
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
+        // Thêm vào giỏ hàng, nếu đã thêm rồi thì chỉ cập nhật lại số lượng
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddToCart(ShopModelView smv)
+        {
+            if (smv != null)
+            {
+                var GDC = from x in _context.Giaodichs
+                          select x;
+                GDC = GDC.Where(s => s.MaXe == smv.MaXe);
+                GDC = GDC.Where(s => s.MaKhachHang == smv.MaKhachHang);
+                List<GiaoDich> GDlist = GDC.ToList();
+                if (GDlist.Count == 0)
+                {
+                    GiaoDich gd = new GiaoDich();
+                    gd.MaKhachHang = (int)smv.MaKhachHang;
+                    gd.MaXe = (int)smv.MaXe;
+                    gd.SoLuongMua = 1;
+                    gd.TongTien = (double)(smv.GiaThanh * 1);
+
+                    //_context.Add(gd);
+                    //await _context.SaveChangesAsync();
+                    ViewData["ResultGoodMessage"] = "Add to your pocket";
+                    return RedirectToAction("Cart", new { id = (int)smv.MaKhachHang});
+                }
+            }
+            ViewData["ResultBadMessage"] = "We out of stock";
+            return RedirectToAction("Shopping", "Xes", new { id = (int)smv.MaXe });
         }
 
         // GET: GiaoDiches

@@ -432,6 +432,6 @@ b {
     font-size: 16px;
 }
 
-    .profile-desc-link a:hover {
-        text-decoration: none;
-    }
+.profile-desc-link a:hover {
+    text-decoration: none;
+}
