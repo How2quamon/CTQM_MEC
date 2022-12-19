@@ -41,9 +41,70 @@ namespace CTQM_MEC.Controllers
                     XeList.Add(Car);
                 }
                 pmv.ListXe = XeList;
-                return View("Cart", pmv);
+                return View("HoSo", pmv);
             }
             return RedirectToAction("Index", "Home");
+        }
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SignUp(VMLogin newKH)
+        {
+            if (newKH != null)
+            {
+                KhachHang kh = new KhachHang();
+                kh.TenKhachHang = newKH.NewName;
+                kh.SDT = newKH.NewPhone;
+                kh.DiaChi = "";
+                kh.NgaySinh = DateTime.Today;
+                kh.GiayPhepLaiXe = "";
+                kh.Email = newKH.NewEmail;
+                kh.Password = newKH.Password;
+                _context.Add(kh);
+                await _context.SaveChangesAsync();
+                return View("Access", "Login");
+            }
+            return View("Access", "Register");
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> EditProfile(ProfileModelView pmv)
+        {
+            ViewData["BProfileMessage"] = "Fail to update your Profile";
+            if (pmv.MaKhachHang != null && pmv != null)
+            {
+                var khachHang = await _context.KhachHangs.FindAsync(pmv.MaKhachHang);
+                if (pmv.newName != null) khachHang.TenKhachHang = pmv.newName;
+                if (pmv.newPhone != null) khachHang.SDT = pmv.newPhone;
+                if (pmv.newAddress != null) khachHang.DiaChi = pmv.newAddress;
+                if (pmv.newBirthDay != null) khachHang.NgaySinh = (DateTime)pmv.newBirthDay;
+                if (pmv.newBangLai != null) khachHang.GiayPhepLaiXe = pmv.newBangLai;
+                _context.Update(khachHang);
+                await _context.SaveChangesAsync();
+                ViewData["GProfileMessage"] = "Updated your Profie";
+            }
+            return RedirectToAction("Profile", new {id = pmv.MaKhachHang});
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> EditPass(ProfileModelView pmv)
+        {
+            ViewData["BPassMessage"] = "Fail to update your Password";
+            if (pmv.MaKhachHang != null && pmv != null)
+            {
+                var khachHang = await _context.KhachHangs.FindAsync(pmv.MaKhachHang);
+                if (pmv.oldPass == khachHang.Password)
+                {
+                    if (pmv.newPass != null) khachHang.Password = pmv.newPass;
+                    _context.Update(khachHang);
+                    await _context.SaveChangesAsync();
+                    ViewData["GPassMessage"] = "Update your Password";
+                }
+            }
+            return View("Profile", new {id = pmv.MaKhachHang });
         }
 
         // GET: KhachHangs
@@ -90,27 +151,6 @@ namespace CTQM_MEC.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(khachHang);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SignUp(VMLogin newKH)
-        {
-            if (ModelState.IsValid)
-            {
-                KhachHang kh = new KhachHang();
-                kh.TenKhachHang = newKH.NewName;
-                kh.SDT = newKH.NewPhone;
-                kh.DiaChi = "";
-                kh.NgaySinh = DateTime.Today;
-                kh.GiayPhepLaiXe = "";
-                kh.Email = newKH.NewEmail;
-                kh.Password = newKH.Password;
-                _context.Add(kh);
-                await _context.SaveChangesAsync();
-                return View("Access", "Login");
-            }
-            return View("Access", "Register");
         }
 
         // GET: KhachHangs/Edit/5

@@ -1,4 +1,4 @@
-﻿
+﻿@model CTQM_MEC.Models.ProfileModelView
 
 <!DOCTYPE html>
 <html lang="en">
@@ -20,17 +20,36 @@
         <div class="profile row">
             <div class="col-md-3">
                 <div class="profile-sidebar">
-                    <!-- SIDEBAR USERPIC -->
                     <div class="profile-userpic">
-                        <!-- {{url('profile')}}/img/user.png -->
                         <img src="~/images/profile/user.jpg" class="img-responsive" alt="">
                     </div>
-                    <!-- END SIDEBAR USERPIC -->
-                    <!-- SIDEBAR USER TITLE -->
                     <div class="profile-usertitle">
                         <div class="profile-usertitle-name">
-                            <!-- {{$user->user_name}} -->
-                            Danielle de La Fontaine
+                            @Model.TenKhachHang
+                            @if (ViewData["BProfileMessage"] != null)
+                            {
+                                <br />
+                                <label style="color: red;">@ViewData["BProfileMessage"]</label>
+                                <br />
+                            }
+                            @if (ViewData["GProfileMessage"] != null)
+                            {
+                                <br />
+                                <label style="color: green;">@ViewData["GProfileMessage"]</label>
+                                <br />
+                            }
+                            @if (ViewData["BPassMessage"] != null)
+                            {
+                                <br />
+                                <label style="color: red;">@ViewData["BPassMessage"]</label>
+                                <br />
+                            }
+                            @if (ViewData["GPassMessage"] != null)
+                            {
+                                <br />
+                                <label style="color: green;">@ViewData["GPassMessage"]</label>
+                                <br />
+                            }
                         </div>    
                     </div>
                     <div class="profile-usermenu">
@@ -78,27 +97,27 @@
             <div class="col-md-9">
                 <div class="profile-content">
                     <div class="right_inner">
-                        <div class="history" >
-                            <div class="history_ShopImageBox">
-                              <img class="history_ShopImage" src="https://tapchisieuxe.com/wp-content/uploads/2021/07/Mercedes-AMG-G63-va-nhung-bo-ao-dac-biet-dau-la-mau-sac-dat-nhat-tai-Viet-Nam-1.jpg" alt="Tesla Shop">
-                            </div>
-                            <div class="history_ShopTextWithButton history_TextWithButton">
-                              <div class="history_ShopText">
-                                <p>View all shop transactions<span><a class="view_btn" href="#" >View</a></span></p>
-                                
-                              </div>
-                              
-                            </div>
-                        </div>    
+                        @foreach(var item in Model.ListXe)
+                        {
+                            <div class="history" >
+                                <div class="history_ShopImageBox">
+                                  <img class="history_ShopImage" src="~/images/Car/@item.TenXe/1.png" alt="CTQM Shop">
+                                </div>
+                                <div class="history_ShopTextWithButton history_TextWithButton">
+                                  <div class="history_ShopText">
+                                    <p>@item.TenXe<span><a class="view_btn" asp-controller="Xes" asp-action="Shopping" asp-route-id="@item.MaXe" >View</a></span></p>
+                                  </div>
+                                </div>
+                            </div>    
+                        }
                     </div>
-                   
                 </div>
             </div>
         </div>
         
     </div>
     <!-- Modal edit profile-->
-    <div class="modal fade" id="editProfile" tabindex="-1" role="dialog">
+    <div class="modal fade" id="editProfile" tabindex="-1" role="dialog" data-backdrop="false">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <button type="button" class="close" data-dismiss="modal"><i class="icon-xs-o-md"></i></button>
@@ -108,7 +127,7 @@
                 </div>
                 <div class="modal-body">                    
                     <div class="row justify-content-center">                        
-                            <form action="{{url('/updateUser')}}"  method="POST">
+                            <form asp-action="EditProfile" method="post">
                                 <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-12 col-xs-12 edit_information">                                
                                     <div class="row">
                                         <div class="text-center">
@@ -125,83 +144,71 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">                                    
-                                        <div class="form-group">
-                                            <label class="profile_details_text">First Name:</label>
-                                            <input type="text" name="first_name" class="form-control" value="" required >
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">                                    
+                                            <div class="form-group">
+                                                <label class="profile_details_text">Your new Name:</label>
+                                                <input asp-for="newName" type="text" name="first_name" class="form-control">
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                        <div class="form-group">
-                                            <label class="profile_details_text">Last Name: </label>
-                                            <input type="text" name="last_name" class="form-control" value="" required>
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="profile_details_text">Mobile Number:</label>
+                                                <input asp-for="newPhone" type="tel" name="phone" class="form-control" value="" pattern=[0-9]{10}>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <div class="form-group">
-                                            <label class="profile_details_text">Email Address:</label>
-                                            <input type="email" name="email" class="form-control" value="">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="profile_details_text">Date Of Birth:</label>
+                                                <input asp-for="newBirthDay" type="date" name="birthday" class="form-control" value="">
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <div class="form-group">
-                                            <label class="profile_details_text">Mobile Number:</label>
-                                            <input type="tel" name="phone" class="form-control" value="" required pattern=[0-9]{10}>
-                                            
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="profile_details_text">Driver License:</label>
+                                                <select asp-for="newBangLai" name="driver" class="form-control" value="">
+                                                    <option value="A1">A1</option>
+                                                    <option value="A2">A2</option>
+                                                    <option value="A3">A3</option>
+                                                    <option value="A4">A4</option>
+                                                    <option value="B2">B2</option>
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <div class="form-group">
-                                            <label class="profile_details_text">Date Of Birth:</label>
-                                            <input type="date" name="birthday" class="form-control" value="">
+                                    </div>  
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="profile_details_text">Address:</label>
+                                                <input asp-for="newAddress" type="text" name="address" class="form-control" value="">
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <div class="form-group">
-                                            <label class="profile_details_text">Gender:</label>
-                                            <select name="gender" class="form-control" value="" required>
-                                                <option value="Male">Male</option>
-                                                <option value="Female">Female</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>  
-                                <div class="row">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <div class="form-group">
-                                            <label class="profile_details_text">Address:</label>
-                                            <input type="email" name="email" class="form-control" value="" required>
-                                        </div>
-                                    </div>
-                                </div>                              
-                                <div class="row">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 submit">
-                                        <div class="text-center">
-                                            <!--  -->
-                                            <button type="submit" class="btn btn-primary" value="save">Save</button>
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                    </div>                              
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 submit">
+                                            <div class="text-center">
+                                                <input type="text" asp-for="MaKhachHang" value="@Model.MaKhachHang" style="display: none">
+                                                <!--  -->
+                                                <button type="submit" class="btn btn-primary" value="save">Save</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
                             </form>
-                         
                     </div>                              
                 </div>
             </div>
         </div>
     </div>
     <!-- Modal payment-->
-    <div class="modal fade" id="payment" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal fade" id="payment" tabindex="-1" role="dialog" data-backdrop="false">
+        <div class="modal-dialog modal-dialog-centered" role="document" >
             <div class="modal-content">
                 <button type="button" class="close" data-dismiss="modal"><i class="icon-xs-o-md"></i></button>
                 <div class="modal-header">
@@ -250,7 +257,7 @@
         </div>
     </div>
     <!-- Modal change password-->
-    <div class="modal fade" id="changePassword" tabindex="-1" role="dialog">
+    <div class="modal fade" id="changePassword" tabindex="-1" role="dialog" data-backdrop="false">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <button type="button" class="close" data-dismiss="modal"><i class="icon-xs-o-md"></i></button>
@@ -260,13 +267,13 @@
                 </div>
                 <div class="modal-body">                    
                     <div class="row justify-content-center">                        
-                            <form action="{{}}"  method="POST">
+                            <form asp-action="EditPass" asp-route-id="@Model.MaKhachHang" method="post">
                                 <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-12 col-xs-12 edit_information">                                 
                                 <div class="row">
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <div class="form-group">
                                             <label class="profile_details_text">Enter old password:</label>
-                                            <input type="password" name="oldPassword" class="form-control" value="" required id="oldPassword">
+                                            <input asp-for="oldPass" type="password" name="oldPassword" class="form-control" value="" required id="oldPassword">
                                         </div>
                                     </div>
                                 </div>
@@ -274,18 +281,10 @@
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <div class="form-group">
                                             <label class="profile_details_text">Enter new password:</label>
-                                            <input type="password" class="form-control" value="" required id="password1">
+                                            <input asp-for="newPass" type="password" class="form-control" value="" required id="password1">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <div class="form-group">
-                                            <label class="profile_details_text">Confirm new password:</label>
-                                            <input type="password" class="form-control" value="" required id="password2">
-                                        </div>
-                                    </div>
-                                </div> 
                                 <div class="row">
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 submit">
                                         <div class="text-center">
@@ -345,7 +344,6 @@
         });
 
 // function to validate first password
-
         $.validator.addMethod("pwcheck", function(value) {
         return /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!#\$%\^&\*])(?=.{8,})/.test(value)
         });
@@ -363,6 +361,7 @@
                 }
             }
         });
+        $('.modal-backdrop').remove();
     </script>
 </body>
 </html>
