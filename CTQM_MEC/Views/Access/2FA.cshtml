@@ -18,13 +18,13 @@
                 <span>Click button if you don't see any OTP</span>
             <div class="button-box">
                 <div id="btnVeri"></div>
-                <button type="button" id="resendBtn" class="toggle-btn" onclick="SendVeri">OTP Verification</button>
+                    <button type="button" id="resendBtn" class="toggle-btn" onclick="location.href='@Url.Action("ReSendVeri", "Access", new {phoneN = phone})'">OTP Verification</button>
             </div>  
             <div class="social-icons">
                 <img src="~/images/login/mercedes-logo-png-mercedes-benz-logo-vector-icons-and-png-17.png">
             </div>
             <form asp-controller="Access" asp-action="Login" method="post" id="Login" class="input-group">
-                <input type="text" for="smscode" class="input-field" placeholder="Enter your OPT" required>
+                <input type="text" asp-for="smsCode" class="input-field" placeholder="Enter your OTP" required>
                 <button type="submit" class="submit-btn">LOG IN</button>
                     <input type="email" asp-for="Email" value=@data.Email style="display: none">
                     <input type="password" asp-for="Password" value=@data.Password style="display: none">
@@ -34,20 +34,5 @@
                 }
         </div>
     </div> 
-    <script type="text/javascript">
-        $(function(){
-            $("#resendBtn").click(function(){
-                $.ajax({
-                    url: "/Access/SendVeri",
-                    data: {
-                        phoneN: $("#inputPhone").val(),
-                    },
-                    success: function(){
-                        <span style="color: green;">Re-sending Veri</span>
-                    }
-                });
-            });
-        });
-    </script>
 </body>
 </html>

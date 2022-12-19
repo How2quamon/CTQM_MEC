@@ -1,5 +1,10 @@
-﻿g@{
+﻿@using System.Security.Claims;
+g@{
     ViewData["Title"] = "CheckoutSuccess";
 }
 
 <h1>Checkout Success</h1>
+@if (Context.User.Identity.IsAuthenticated)
+{
+	<li><a class="header__nav__btn" asp-controller="KhachHangs" asp-action="Profile" asp-route-id=@Context.User.FindFirst(ClaimTypes.SerialNumber).Value>Return to your profile</a></li>
+}

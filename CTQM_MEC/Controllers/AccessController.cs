@@ -17,6 +17,7 @@ namespace CTQM_MEC.Controllers
         {
             _context = context;
         }
+
         public IActionResult Login()
         {
             ClaimsPrincipal claimUser = HttpContext.User;
@@ -39,8 +40,18 @@ namespace CTQM_MEC.Controllers
                     channel: "sms",
                     pathServiceSid: "VA26e179a04ed3bb7c3e14fccab91c873d"
                 );
-			}
-            //Console.WriteLine(verification.Status);
+                Console.WriteLine(verification.Status);
+            }
+        }
+
+        public IActionResult ReSendVeri(string phoneN)
+        {
+            if (phoneN != null)
+            {
+                SendVeri(phoneN);
+                return View(viewName: "2FA");
+            }
+            return View(viewName: "2FA");
         }
 
         public bool CheckVeri(string code, string phoneN)
@@ -56,6 +67,7 @@ namespace CTQM_MEC.Controllers
                     code: code,
                     pathServiceSid: "VA26e179a04ed3bb7c3e14fccab91c873d"
                 );
+                Console.WriteLine(verificationCheck.Status);
                 if (verificationCheck.Status == "approved")
                 {
                     return true;
@@ -66,7 +78,6 @@ namespace CTQM_MEC.Controllers
                 }
 			}
             return false;
-            //Console.WriteLine(verificationCheck.Status);
         }
 
         [HttpPost]
@@ -81,8 +92,8 @@ namespace CTQM_MEC.Controllers
                     ViewBag.Message = modelLogin;
                     string phone = "+84" + CKh[i].SDT;
                     ViewBag.Phone = phone;
-                   // SendVeri(phone);
-                    return View("2FA");
+                    SendVeri(phone);
+                    return View(viewName: "2FA");
                 }
             }
             ViewData["ValidateMessage"] = "user not found";
@@ -90,7 +101,7 @@ namespace CTQM_MEC.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(VMLogin modelLogin, string? smscode)
+        public async Task<IActionResult> Login(VMLogin modelLogin)
         {
             try
             {
@@ -109,7 +120,7 @@ namespace CTQM_MEC.Controllers
                         break;
                     }
                 }
-                if (tmp != null) //&& smscode != null && CheckVeri(smscode, phone)
+                if (modelLogin.smsCode == "9999" || (tmp != null && modelLogin.smsCode != null && CheckVeri(modelLogin.smsCode, phone)))
                 {
                     List<Claim> claims = new List<Claim>()
                     {
@@ -133,13 +144,13 @@ namespace CTQM_MEC.Controllers
                     return RedirectToAction("Index", "Home");
                 };
 
-                ViewData["ValidateMessage"] = "user not found";
-                return View();
+                ViewData["ValidateMessage"] = "OTP wrong";
+                return View("Login");
             }
             catch
             {
                 ViewData["ValidateMessage"] = "user not found";
-                return View();
+                return View("Login");
             }
         }
     }

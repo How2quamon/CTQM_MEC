@@ -63,7 +63,7 @@
                     <div>
                         <input type="button" class="cancel" onclick="location.href='@Url.Action("Shopping", "GiaoDiches", new {id = Int32.Parse(@Context.User.FindFirst(ClaimTypes.SerialNumber).Value)})'" value="Cancel" readonly/>
                         &nbsp;
-                        <input type="button" class="cancel" onclick="location.href='@Url.Action("PaypalCheckout", "HoaDons", new {id = Int32.Parse(@Context.User.FindFirst(ClaimTypes.SerialNumber).Value)})'" value="CheckOut Paypal" readonly />
+                        <input type="button" class="confirm" onclick="location.href='@Url.Action("PaypalCheckout", "HoaDons", new {id = Int32.Parse(@Context.User.FindFirst(ClaimTypes.SerialNumber).Value)})'" value="CheckOut Paypal" readonly />
                     </div>
                     <!--<form asp-action="InHoaDon" asp-route-id=Context.User.FindFirst(ClaimTypes.SerialNumber).Value >
                         <input type="submit" class="confirm" readonly value="Pay"/>

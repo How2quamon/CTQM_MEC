@@ -127,7 +127,7 @@
                             </div>
                             <div class="order-summary__info checkout-button">
                                 <div class="tds-btn_group tds-btn_group--vertical order-summary__info checkout">
-                                    <button class="tds-btn tds-btn--primary" onclick="location.href='@Url.Action("Product", "Xes")'" >Checkout</button>
+                                    <button class="tds-btn tds-btn--primary" onclick="location.href='@Url.Action("ThanhToan", "HoaDons", new {id = @Context.User.FindFirst(ClaimTypes.SerialNumber).Value})'">Checkout</button>
                                 </div>
                             </div>
                         </div>

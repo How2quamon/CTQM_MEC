@@ -112,9 +112,12 @@
                                     <input type="text" asp-for="SoLuongMua" name="quantity" value="1" class="qty">
                                     <div class="qtyplus">+</div>-->
                                 </div>
-                                <input type="number" asp-for="MaKhachHang" value=@Context.User.FindFirst(ClaimTypes.SerialNumber).Value style="display: none">
-                                <input type="number" asp-for="GiaThanh" value=@Model.XeDetails.GiaThanh style="display: none">
-                                <input type="number" asp-for="MaXe" value=@Model.XeDetails.MaXe style="display: none">
+                                @if (Context.User.Identity.IsAuthenticated)
+                                {
+                                    <input type="number" asp-for="MaKhachHang" value=@Context.User.FindFirst(ClaimTypes.SerialNumber).Value style="display: none">
+                                    <input type="number" asp-for="GiaThanh" value=@Model.XeDetails.GiaThanh style="display: none">
+                                    <input type="number" asp-for="MaXe" value=@Model.XeDetails.MaXe style="display: none">
+                                }
                                 <button type="submit" class="round-black-btn">Add to Cart</button>
                         </div>
                     </form>
@@ -149,7 +152,6 @@
                         <div class="exterior-content">
                             <img class="face-car" src="~/images/car/@Model.XeDetails.TenXe/6.png" alt="More Infomation 1"/>
                             <p class="content">@Model.MoreInfo.Title1</p>
-    
                         </div>
              
                         <h2 class="hd2">@Model.MoreInfo.Head2</h2>
@@ -166,7 +168,6 @@
                     </div>
                 </div>
             }
-
             <!-- Related Product -->
             <div class="heading-section">
                 <h2>Related Product</h2>

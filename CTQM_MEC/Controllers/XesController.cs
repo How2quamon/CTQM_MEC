@@ -44,8 +44,8 @@ namespace CTQM_MEC.Controllers
             return View(ProductXe);
         }
 
-        // GET: Xes/Details/5
-        public async Task<IActionResult> Shopping(int? id)
+		// GET: Xes/Details/5
+		public async Task<IActionResult> Shopping(int? id)
         {
             if (id == null || _context.Xe == null)
             {
@@ -73,7 +73,7 @@ namespace CTQM_MEC.Controllers
             if (!String.IsNullOrEmpty(searching))
             {
                 Sxe = Sxe.Where(s => s.TenXe.Contains(searching));
-                return View("Product", await Sxe.ToListAsync());
+                return RedirectToAction("Product", await Sxe.ToListAsync());
             }
             return NotFound();
         }
