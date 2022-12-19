@@ -17,7 +17,7 @@ namespace CTQM_MEC.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.10")
+                .HasAnnotation("ProductVersion", "6.0.12")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -59,7 +59,10 @@ namespace CTQM_MEC.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MaHoaDon"), 1L, 1);
 
-                    b.Property<int>("MaGiaoDich")
+                    b.Property<int>("MaKhachHang")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MaXe")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("NgayThanhToan")
@@ -76,7 +79,9 @@ namespace CTQM_MEC.Migrations
 
                     b.HasKey("MaHoaDon");
 
-                    b.HasIndex("MaGiaoDich");
+                    b.HasIndex("MaKhachHang");
+
+                    b.HasIndex("MaXe");
 
                     b.ToTable("HoaDon");
                 });
@@ -92,12 +97,19 @@ namespace CTQM_MEC.Migrations
                     b.Property<string>("DiaChi")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("GiayPhepLaiXe")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("NgaySinh")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SDT")
                         .IsRequired()
@@ -166,11 +178,17 @@ namespace CTQM_MEC.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Head1")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("LoaiDongCo")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MoTa")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MoTa2")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhanKhuc")
@@ -211,13 +229,21 @@ namespace CTQM_MEC.Migrations
 
             modelBuilder.Entity("CTQM_Car.Data.HoaDon", b =>
                 {
-                    b.HasOne("CTQM_Car.Data.GiaoDich", "GiaoDich")
+                    b.HasOne("CTQM_Car.Data.KhachHang", "KhachHang")
                         .WithMany()
-                        .HasForeignKey("MaGiaoDich")
+                        .HasForeignKey("MaKhachHang")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("GiaoDich");
+                    b.HasOne("CTQM_Car.Data.Xe", "Xe")
+                        .WithMany()
+                        .HasForeignKey("MaXe")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("KhachHang");
+
+                    b.Navigation("Xe");
                 });
 
             modelBuilder.Entity("CTQM_Car.Data.ThongTinChiTietXe", b =>

@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using CTQM_Car.Data;
 using CTQM_MEC.Data;
+using CTQM_Car.Data;
+using CTQM_MEC.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CTQM_MEC.Controllers
 {
@@ -17,6 +19,31 @@ namespace CTQM_MEC.Controllers
         public KhachHangsController(CTQMDbContext context)
         {
             _context = context;
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Profile(int? id)
+        {
+            ProfileModelView pmv = new ProfileModelView();
+            if (id != null)
+            {
+                pmv.MaKhachHang = id;
+                var khachHang = await _context.KhachHangs.FindAsync(id);
+                pmv.TenKhachHang = khachHang.TenKhachHang;
+                var HD = from x in _context.HoaDons
+                         where x.MaKhachHang == id
+                         select x;
+                List<HoaDon> HDList = HD.ToList();
+                List<Xe> XeList = new List<Xe>();
+                for (int i = 0; i < HDList.Count; i++)
+                {
+                    var Car = await _context.Xe.FindAsync(HDList[i].MaXe);
+                    XeList.Add(Car);
+                }
+                pmv.ListXe = XeList;
+                return View("Cart", pmv);
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: KhachHangs
@@ -63,6 +90,27 @@ namespace CTQM_MEC.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(khachHang);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SignUp(VMLogin newKH)
+        {
+            if (ModelState.IsValid)
+            {
+                KhachHang kh = new KhachHang();
+                kh.TenKhachHang = newKH.NewName;
+                kh.SDT = newKH.NewPhone;
+                kh.DiaChi = "";
+                kh.NgaySinh = DateTime.Today;
+                kh.GiayPhepLaiXe = "";
+                kh.Email = newKH.NewEmail;
+                kh.Password = newKH.Password;
+                _context.Add(kh);
+                await _context.SaveChangesAsync();
+                return View("Access", "Login");
+            }
+            return View("Access", "Register");
         }
 
         // GET: KhachHangs/Edit/5

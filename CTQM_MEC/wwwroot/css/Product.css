@@ -30,7 +30,7 @@
 
 .car__list {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     flex-flow: row wrap;
     list-style-type: none;
     margin: 15px 0 0;
@@ -70,7 +70,7 @@
     width: 100%;
     height: auto;
     z-index: 0;
-    transition: opacity .10s cubic-bezier(.165,.84,.44,1);
+    transition: opacity .5s cubic-bezier(.165,.84,.44,1);
 }
 
     .car-item__image.second-image {

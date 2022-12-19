@@ -12,9 +12,7 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.GiaoDich)
-            </th>
+
             <th>
                 @Html.DisplayNameFor(model => model.NgayThanhToan)
             </th>
@@ -31,36 +29,9 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.GiaoDich.MaGiaoDich)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NgayThanhToan)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhuongThucThanhToan)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TongSoLuong)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ThanhTien)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.MaHoaDon">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.MaHoaDon">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.MaHoaDon">Delete</a>
-            </td>
-            <td>
                     <a asp-action="PaypalCheckout">
                         THANH TOÁN PAYPALLLLLLLL
                     </a>
-            </td>
-        </tr>
-            
-}
     </tbody>
     
 </table>

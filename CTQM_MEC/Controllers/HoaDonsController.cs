@@ -11,6 +11,10 @@ using System.Security.Cryptography.X509Certificates;
 using PayPal.Core;
 using PayPal.v1.Payments;
 using BraintreeHttp;
+using Microsoft.AspNetCore.Authorization;
+using CTQM_MEC.Models;
+using System.ComponentModel.DataAnnotations;
+using Twilio.TwiML.Voice;
 
 namespace CTQM_MEC.Controllers
 {
@@ -29,7 +33,7 @@ namespace CTQM_MEC.Controllers
             _secretKey = config["PaypalSettings:SecretKey"];
         }
 
-        public async Task<IActionResult> PaypalCheckout()
+        public async Task<IActionResult> PaypalCheckout(int? id)
         {
             var environment = new SandboxEnvironment(_clientId, _secretKey);
             var client = new PayPalHttpClient(environment);
@@ -39,19 +43,26 @@ namespace CTQM_MEC.Controllers
             {
                 Items = new List<Item>()
             };
-            var total = Math.Round(_context.HoaDons.Sum(p => p.ThanhTien)/ TyGia, 2);
-            foreach (var item in _context.HoaDons)
+            double tong = 0;
+            var GH = from x in _context.Giaodichs
+                     where x.MaKhachHang == id
+                     select x;
+            List<GiaoDich> GHList = GH.ToList();
+            for(int i = 0; i < GHList.Count; i++)
             {
+		        var Car = await _context.Xe.FindAsync(GHList[i].MaXe);
+                tong += Car.GiaThanh;
                 itemList.Items.Add(new Item()
                 {
-                    Name = item.MaGiaoDich.ToString(),
+                    Name = Car.TenXe,
                     Currency = "USD",
-                    Price = Math.Round(item.ThanhTien/TyGia,2).ToString(),
-                    //Quantity = item.Quantity.ToString(),
+                    Price = Math.Round(Car.GiaThanh / TyGia, 2).ToString(),
+                    Quantity = "1",
                     Sku = "sku",
                     Tax = "0"
                 });
             }
+            var total = Math.Round(tong/ TyGia, 2).ToString();
             #endregion
             var paypalOrderId = DateTime.Now.Ticks;
             var hostName = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
@@ -81,7 +92,7 @@ namespace CTQM_MEC.Controllers
                 RedirectUrls = new RedirectUrls()
                 {
                     CancelUrl = $"{hostName}/hoadons/CheckoutFail",
-                    ReturnUrl = $"{hostName}/hoadons/CheckoutSuccess"
+                    ReturnUrl = $"{hostName}/hoadons/InHoaDon/{id}"
                 },
                 Payer = new Payer()
                 {
@@ -89,7 +100,7 @@ namespace CTQM_MEC.Controllers
                 }
             };
 
-            PaymentCreateRequest request = new PaymentCreateRequest();
+            var request = new PaymentCreateRequest();
             request.RequestBody(payment);
 
             try
@@ -109,7 +120,6 @@ namespace CTQM_MEC.Controllers
                         paypalRedirectUrl = lnk.Href;
                     }
                 }
-
                 return Redirect(paypalRedirectUrl);
             }
             catch (HttpException httpException)
@@ -132,126 +142,78 @@ namespace CTQM_MEC.Controllers
             return View();
         }
 
-        // GET: HoaDons
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var cTQMDbContext = _context.HoaDons.Include(h => h.GiaoDich);
-            return View(await cTQMDbContext.ToListAsync());
-        }
-
-        // GET: HoaDons/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.HoaDons == null)
-            {
-                return NotFound();
-            }
-
-            var hoaDon = await _context.HoaDons
-                .Include(h => h.GiaoDich)
-                .FirstOrDefaultAsync(m => m.MaHoaDon == id);
-            if (hoaDon == null)
-            {
-                return NotFound();
-            }
-
-            return View(hoaDon);
-        }
-
-        // GET: HoaDons/Create
-        public IActionResult Create()
-        {
-            ViewData["MaGiaoDich"] = new SelectList(_context.Giaodichs, "MaGiaoDich", "MaGiaoDich");
             return View();
         }
 
-        // POST: HoaDons/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MaHoaDon,MaGiaoDich,NgayThanhToan,PhuongThucThanhToan,TongSoLuong,ThanhTien")] HoaDon hoaDon)
+        [Authorize]
+        public async Task<IActionResult> ThanhToan(int? id)
         {
-            if (ModelState.IsValid)
+            CartModelView cmv = new CartModelView();
+            if (id != null)
             {
-                _context.Add(hoaDon);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["MaGiaoDich"] = new SelectList(_context.Giaodichs, "MaGiaoDich", "MaGiaoDich", hoaDon.MaGiaoDich);
-            return View(hoaDon);
-        }
-
-        // GET: HoaDons/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null || _context.HoaDons == null)
-            {
-                return NotFound();
-            }
-
-            var hoaDon = await _context.HoaDons.FindAsync(id);
-            if (hoaDon == null)
-            {
-                return NotFound();
-            }
-            ViewData["MaGiaoDich"] = new SelectList(_context.Giaodichs, "MaGiaoDich", "MaGiaoDich", hoaDon.MaGiaoDich);
-            return View(hoaDon);
-        }
-
-        // POST: HoaDons/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MaHoaDon,MaGiaoDich,NgayThanhToan,PhuongThucThanhToan,TongSoLuong,ThanhTien")] HoaDon hoaDon)
-        {
-            if (id != hoaDon.MaHoaDon)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
+                cmv.MaKhachHang = id;
+                double tong = 0;
+                var GH = from x in _context.Giaodichs
+                         where x.MaKhachHang == id
+                         select x;
+                List<GiaoDich> GHList = GH.ToList();
+                if (GHList.Count > 0)
                 {
-                    _context.Update(hoaDon);
+                    List<Xe> XeList = new List<Xe>();
+                    for (int i = 0; i < GHList.Count; i++)
+                    {
+                        var Car = await _context.Xe.FindAsync(GHList[i].MaXe);
+                        tong += Car.GiaThanh;
+                        XeList.Add(Car);
+                    }
+                    cmv.ListXe = XeList;
+                    // + 30tr tiền thuế :)
+                    cmv.TongTien = tong + (10000000 * GHList.Count);
+                    return View("ThanhToan", cmv);
+                }
+                return RedirectToAction("Index", "Home");
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
+        [Authorize]
+        public async Task<IActionResult> InHoaDon(int? id)
+        {
+            if (id != null)
+            {
+                var GH = from x in _context.Giaodichs
+                         where x.MaKhachHang == id
+                         select x;
+                List<GiaoDich> GHList = GH.ToList();
+                for (int i = 0; i < GHList.Count;i++)
+                {
+                    HoaDon hd = new HoaDon();
+                    hd.MaKhachHang = GHList[i].MaKhachHang;
+                    hd.MaXe = GHList[i].MaXe;
+                    hd.TongSoLuong = GHList[i].SoLuongMua;
+                    hd.ThanhTien = GHList[i].TongTien + 10000000;
+                    hd.NgayThanhToan = DateTime.Today;
+                    hd.PhuongThucThanhToan = "PayPal";
+                    _context.Add(hd);
+                    var giaoDich = await _context.Giaodichs
+                    .FirstOrDefaultAsync(m => m.MaGiaoDich == GHList[i].MaGiaoDich);
+                    if (giaoDich != null)
+                    {
+                        _context.Giaodichs.Remove((GiaoDich)giaoDich);
+                    }
                     await _context.SaveChangesAsync();
+                    //Paypal
+                    // Hoá đơn dựa vào mã khách hàng khớp vd 1 
+                    // 2 xe A B
+                    // 1 A B
+                    // A 1
+                    // B 1
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!HoaDonExists(hoaDon.MaHoaDon))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                return View("CheckoutSuccess");
             }
-            ViewData["MaGiaoDich"] = new SelectList(_context.Giaodichs, "MaGiaoDich", "MaGiaoDich", hoaDon.MaGiaoDich);
-            return View(hoaDon);
-        }
-
-        // GET: HoaDons/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null || _context.HoaDons == null)
-            {
-                return NotFound();
-            }
-
-            var hoaDon = await _context.HoaDons
-                .Include(h => h.GiaoDich)
-                .FirstOrDefaultAsync(m => m.MaHoaDon == id);
-            if (hoaDon == null)
-            {
-                return NotFound();
-            }
-
-            return View(hoaDon);
+            return RedirectToAction("Index", "Home");
         }
 
         // POST: HoaDons/Delete/5

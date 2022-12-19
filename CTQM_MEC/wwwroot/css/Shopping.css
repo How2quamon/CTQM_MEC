@@ -194,7 +194,8 @@ h2 {
 	border-radius: 4px;
     background: #212529;
     color: #fff;
-    padding: 7px 45px;
+    padding: 14px 90px;
+	font-size: 1.5rem;
     display: inline-block;
     margin-top: 20px;
     border: solid 2px #212529; 
@@ -395,3 +396,56 @@ h4{
 	text-align: justify;
 }
 
+.wrapper {
+	display: table;
+	margin: 0 auto;
+}
+/* Plus */
+.animated-icon {
+	position: relative;
+	width: 50px;
+	height: 50px;
+	border: 2px solid #000;
+	margin: 0 auto;
+	border-radius: 50%;
+	background: black;
+	outline: 0;
+}
+
+.icon-plus::before {
+	content: " ";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 29px;
+	height: 5px;
+	margin: auto;
+	border-radius: 50em;
+	background: rgb(255, 255, 255);
+	transform: translateX(-50%) translateY(-50%) rotate(-180deg);
+	transition: .3s all linear;
+	will-change: transform;
+}
+
+.icon-plus::after {
+	content: " ";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 5px;
+	height: 29px;
+	margin: auto;
+	border-radius: 50em;
+	background: rgb(255, 255, 255);
+	transform: translateX(-50%) translateY(-50%);
+	transition: .3s all linear;
+	will-change: transform;
+}
+
+.icon-plus:focus::before {
+	transform: translateX(-50%) translateY(-50%) rotate(0deg);
+}
+
+.icon-plus:focus::after {
+	transform: translateX(-50%) translateY(-50%) rotate(90deg);
+}

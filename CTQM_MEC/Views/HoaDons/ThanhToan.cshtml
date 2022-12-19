@@ -1,0 +1,76 @@
+﻿@using System.Security.Claims
+@model CTQM_MEC.Models.CartModelView
+@{
+    ViewData["Title"] = "Thanh Toán";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"></script>
+    <script src="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600|Raleway:300,400,600&amp;subset=latin-ext"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.min.css"></script>
+    <link href="~/css/ThanhToan.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="small-contrainer cart-page">
+        <table>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+            </tr>
+            @foreach (var item in Model.ListXe)
+            {
+            <tr>
+                <td>
+                    <div class="cart-info">
+                        <img src="~/images/Car/@item.TenXe/2.png">
+                        <div>
+                            <p>@item.TenXe</p>
+                            <small>Price: @item.GiaThanh VNĐ</small>
+                        </div>
+                    </div>
+                </td>
+                <td><label>1</label></td>
+                <td>@item.GiaThanh VNĐ</td>
+            </tr>
+            }
+        </table>
+        <div class="total-price">
+            <table>
+                <tr>
+                    <td>Shipping</td>
+                    <td>Free</td>
+                </tr>
+                <tr>
+                    <td>Tax</td>
+                    <td>@(Model.ListXe.Count * 10000000) VNĐ</td>
+                </tr>
+                <tr>
+                    <td>Tatol</td>
+                    <td>@Model.TongTien VNĐ</td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-12 panel-footer creditcard-footer">
+            <div class="row">
+                <div class="col-12 align-right">
+                    <div>
+                        <input type="button" class="cancel" onclick="location.href='@Url.Action("Shopping", "GiaoDiches", new {id = Int32.Parse(@Context.User.FindFirst(ClaimTypes.SerialNumber).Value)})'" value="Cancel" readonly/>
+                        &nbsp;
+                        <input type="button" class="cancel" onclick="location.href='@Url.Action("PaypalCheckout", "HoaDons", new {id = Int32.Parse(@Context.User.FindFirst(ClaimTypes.SerialNumber).Value)})'" value="CheckOut Paypal" readonly />
+                    </div>
+                    <!--<form asp-action="InHoaDon" asp-route-id=Context.User.FindFirst(ClaimTypes.SerialNumber).Value >
+                        <input type="submit" class="confirm" readonly value="Pay"/>
+                    </form>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -95,7 +95,9 @@ body {
     -o-transition-duration: 0.4s;
     font-size: 12px;
 }
-
+.header a {
+    text-decoration: none !important;
+}
     .search:focus {
         width: 363px; /* Bar width+1px */
         padding: 0 16px 0 0;
@@ -597,7 +599,6 @@ ul {
 }
 
 .header__nav__btn {
-    display: none;
     font-size: 1.4rem;
     font-weight: bold;
     padding: 1rem;
@@ -786,4 +787,15 @@ ul {
     .section__action__container {
         width: 50%;
     }
+}
+
+.c-product-tile__promo {
+    background-color: red;
+    color: white;
+    font-size: 12px;
+    line-height: 1;
+    padding: 4px;
+    position: absolute;
+    top: 0;
+    left: 0l;
 }

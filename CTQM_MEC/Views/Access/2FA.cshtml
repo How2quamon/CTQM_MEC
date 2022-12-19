@@ -1,0 +1,53 @@
+﻿@model CTQM_MEC.Models.VMLogin;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/css/login.css" rel="stylesheet" />
+    <title>OTP Veri</title>
+</head>
+<body>
+    <div class="hero">
+        <div class="form-box">
+                @if (ViewBag.Message != null) {
+                    var data = ViewBag.Message;
+                    var phone = ViewBag.Phone;
+                <span>@ViewData["UserLoginName"]</span>
+                <span>Click button if you don't see any OTP</span>
+            <div class="button-box">
+                <div id="btnVeri"></div>
+                <button type="button" id="resendBtn" class="toggle-btn" onclick="SendVeri">OTP Verification</button>
+            </div>  
+            <div class="social-icons">
+                <img src="~/images/login/mercedes-logo-png-mercedes-benz-logo-vector-icons-and-png-17.png">
+            </div>
+            <form asp-controller="Access" asp-action="Login" method="post" id="Login" class="input-group">
+                <input type="text" for="smscode" class="input-field" placeholder="Enter your OPT" required>
+                <button type="submit" class="submit-btn">LOG IN</button>
+                    <input type="email" asp-for="Email" value=@data.Email style="display: none">
+                    <input type="password" asp-for="Password" value=@data.Password style="display: none">
+                    <input type="checkbox" asp-for="KeepLogedIn" value=@data.KeepLogedIn style="display: none">
+                    <input type="text" id="inputPhone" value=@phone style="display: none">
+            </form>
+                }
+        </div>
+    </div> 
+    <script type="text/javascript">
+        $(function(){
+            $("#resendBtn").click(function(){
+                $.ajax({
+                    url: "/Access/SendVeri",
+                    data: {
+                        phoneN: $("#inputPhone").val(),
+                    },
+                    success: function(){
+                        <span style="color: green;">Re-sending Veri</span>
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

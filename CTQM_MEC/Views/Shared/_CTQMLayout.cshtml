@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
@@ -13,33 +14,30 @@
 	<div class="blur__overlay"></div>
 
 	<header class="header">
-		<a class="header__left" href="#">
-			<img class="header__logo" src="~/images/ctqm_logo.png" alt="" />
+		<a class="header__left" href="/home">
+			<img class="header__logo" src="~/images/CTQM_logo.png" alt="" />
 		</a>
-
-		<ul class="header__middle">
-			<li>
-			<li><a class="header__nav__btn" href="#">Model S</a></li>
-			<li><a class="header__nav__btn" href="#">Model 3</a></li>
-			<li><a class="header__nav__btn" href="#">Model X</a></li>
-			<li><a class="header__nav__btn" href="#">Model Y</a></li>
-			<li><a class="header__nav__btn" href="#">solar roof</a></li>
-			<li><a class="header__nav__btn" href="#">solar panels</a></li>
-			</li>
-		</ul>
 
 		<ul class="header__right">
 			<li>
 				<div class="search-container">
-					<form action="/search" method="get">
-						<input class="search expandright" id="searchright" type="search" name="q" placeholder="Search">
-						<label class="header__nav__btn search_btn" for="searchright"><span class="mglass">&#9906;</span></label>
+					<form asp-controller="xes" asp-action="search" method="get">
+						<input class="search expandright" id="searchright" type="text" name="searching" placeholder="Search">
+						<label class="header__nav__btn search_btn" for="searchright" type="submit" value="searching"><span class="mglass">&#9906;</span></label>
 					</form>
 				</div>
 			</li>
-			<li><a class="header__nav__btn" href="#">shop</a></li>
-			<li><a class="header__nav__btn" href="#">account</a></li>
-			<li><a class="menu__btn header__nav__btn" href="#">menu</a></li>
+			@if (Context.User.Identity.IsAuthenticated) 
+			{
+				<li><a class="header__nav__btn" asp-controller="GiaoDiches" asp-action="Shopping" asp-route-id=@Context.User.FindFirst(ClaimTypes.SerialNumber).Value >shop</a></li>
+				<li><a class="header__nav__btn" asp-controller="KhachHangs" asp-action="Profile" asp-route-id=@Context.User.FindFirst(ClaimTypes.SerialNumber).Value >@Context.User.FindFirst(ClaimTypes.NameIdentifier).Value</a></li>
+			}
+			else 
+			{
+				<li><a class="header__nav__btn" asp-controller="GiaoDiches" asp-action="Shopping">shop</a></li>
+				<li><a class="header__nav__btn" asp-controller="access" asp-action="Login">account</a></li>
+			}
+			<li><a class="menu__btn header__nav__btn">menu</a></li>
 		</ul>
 	</header>
 
@@ -47,29 +45,15 @@
 		<div class="close__btn__container">
 			<img class="navigation__close__btn" src="https://thatanjan.github.io/tesla-clone-yt/media/close_icon.svg" alt="" />
 		</div>
-
 		<ul>
-			<li class="link__in__middle"><a class="nav__link" href="#">Model S</a></li>
-			<li class="link__in__middle"><a class="nav__link" href="#">Model 3</a></li>
-			<li class="link__in__middle"><a class="nav__link" href="#">Model X</a></li>
-			<li class="link__in__middle"><a class="nav__link" href="#">Model Y</a></li>
-			<li class="link__in__middle">
-				<a class="nav__link" href="#">Solar roofs</a>
-			</li>
-			<li class="link__in__middle">
-				<a class="nav__link" href="#">Solar panels</a>
-			</li>
-			<li><a class="nav__link" href="#">Existing Inventory </a></li>
-			<li><a class="nav__link" href="#">Used Inventory </a></li>
-			<li><a class="nav__link" href="#">Trade-In </a></li>
-			<li><a class="nav__link" href="#">Test drive </a></li>
-			<li><a class="nav__link" href="#">Powerwall </a></li>
-			<li><a class="nav__link" href="#">Commercial Energy </a></li>
-			<li><a class="nav__link" href="#">utilities </a></li>
-			<li><a class="nav__link" href="#">Charging</a></li>
-			<li><a class="nav__link" href="#">Find us</a></li>
-			<li><a class="nav__link" href="#">Support</a></li>
-			<li><a class="nav__link" href="#">Investor Relations</a></li>
+			<li><a class="header__nav__btn" asp-controller="xes" asp-action="Product" >New Arrival</a></li>
+			<li><a class="header__nav__btn" asp-controller="xes" asp-action="Product" asp-route-type="Mercedes-EQ" >Mercedes-EQ</a></li>
+			<li><a class="header__nav__btn" asp-controller="xes" asp-action="Product" asp-route-type="Mercedes-AMG" >Mercedes-AMG</a></li>
+			<li><a class="header__nav__btn" asp-controller="xes" asp-action="Product" asp-route-type="Coupé" >Coupé</a></li>
+			<li><a class="header__nav__btn" asp-controller="xes" asp-action="Product" asp-route-type="Mercedes-Maybach" >Mercedes-Maybach</a></li>
+			@if (Context.User.Identity.IsAuthenticated) {
+				<li><a class="header__nav__btn" asp-area="" asp-controller="Home" asp-action="LogOut">Logout</a></li>
+			}
 		</ul>
 	</nav>
 
@@ -84,12 +68,10 @@
 	</section>
 	<footer class="footer">
 		<ul>
-			<li><a href="#">CTQM © 2022</a></li>
-			<li><a href="#"> Privacy &amp; Legal </a></li>
-			<li><a href="#"> contact </a></li>
-			<li><a href="#">news</a></li>
-			<li><a href="#">engage</a></li>
-			<li><a href="#">locations</a></li>
+			<li><a href="">CTQM © 2022</a></li>
+			<li><a href="">Privacy &amp; Legal</a></li>
+			<li><a href="">2211COMP106401</a></li>
+			<li><a href="">Mr.HIENLTH</a></li>
 		</ul>
 	</footer>
 	<script src="~/js/NavFooter.js"></script>

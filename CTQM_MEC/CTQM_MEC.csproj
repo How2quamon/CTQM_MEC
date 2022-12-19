@@ -16,6 +16,9 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.11" />
     <PackageReference Include="PayPal" Version="2.0.0-rc2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
+    <PackageReference Include="Twilio.AspNet.Common" Version="7.0.0" />
+    <PackageReference Include="Twilio.AspNet.Core" Version="7.0.0" />
+    <PackageReference Include="Twilio.AspNet.Mvc" Version="7.0.0" />
   </ItemGroup>
 
 </Project>
