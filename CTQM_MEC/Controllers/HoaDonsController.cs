@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CTQM_Car.Data;
 using CTQM_MEC.Data;
+using Microsoft.AspNetCore.Authorization;
+using CTQM_MEC.Models;
 
 namespace CTQM_MEC.Controllers
 {
@@ -24,6 +26,65 @@ namespace CTQM_MEC.Controllers
         {
             var cTQMDbContext = _context.HoaDons.Include(h => h.GiaoDich);
             return View(await cTQMDbContext.ToListAsync());
+        }
+
+        [Authorize]
+        public async Task<IActionResult> ThanhToan(int? id)
+        {
+            CartModelView cmv = new CartModelView();
+            if (id != null)
+            {
+                cmv.MaKhachHang = id;
+                double tong = 0;
+                var GH = from x in _context.Giaodichs
+                         where x.MaKhachHang == id
+                         select x;
+                List<GiaoDich> GHList = GH.ToList();
+                List<Xe> XeList = new List<Xe>();
+                for (int i = 0; i < GHList.Count; i++)
+                {
+                    var Car = await _context.Xe.FindAsync(GHList[i].MaXe);
+                    tong += Car.GiaThanh;
+                    XeList.Add(Car);
+                }
+                cmv.ListXe = XeList;
+                // + 30tr tiền thuế :)
+                cmv.TongTien = tong + (10000000 * GHList.Count);
+                return View("ThanhToan", cmv);
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> InHoaDon(int? id)
+        {
+            if (id != null)
+            {
+                var GH = from x in _context.Giaodichs
+                         where x.MaKhachHang == id
+                         select x;
+                List<GiaoDich> GHList = GH.ToList();
+                for (int i = 0; i < GHList.Count;i++)
+                {
+                    HoaDon hd = new HoaDon();
+                    hd.MaGiaoDich = GHList[i].MaGiaoDich;
+                    hd.TongSoLuong = GHList[i].SoLuongMua;
+                    hd.ThanhTien = GHList[i].TongTien + 10000000;
+                    hd.NgayThanhToan = DateTime.Today;
+                    hd.PhuongThucThanhToan = "PayPal";
+                    _context.Add(hd);
+                    var giaoDich = await _context.Giaodichs
+                    .FirstOrDefaultAsync(m => m.MaGiaoDich == GHList[i].MaGiaoDich);
+                    if (giaoDich != null)
+                    {
+                        _context.Giaodichs.Remove((GiaoDich)giaoDich);
+                    }
+                    await _context.SaveChangesAsync();
+                }
+                return RedirectToAction("Profile", "KhachHangs");
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: HoaDons/Details/5

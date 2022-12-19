@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using CTQM_MEC.Data;
 using CTQM_Car.Data;
 using CTQM_MEC.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CTQM_MEC.Controllers
 {
@@ -20,6 +21,7 @@ namespace CTQM_MEC.Controllers
             _context = context;
         }
 
+        [Authorize]
         public async Task<IActionResult> Profile()
         {
             return View("HoSo");

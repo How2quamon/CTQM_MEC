@@ -9,7 +9,6 @@ using CTQM_Car.Data;
 using CTQM_MEC.Data;
 using CTQM_MEC.Models;
 using System.Security.Claims;
-using System.Web.WebPages;
 using Microsoft.AspNetCore.Authorization;
 using Twilio.TwiML.Voice;
 
@@ -36,12 +35,15 @@ namespace CTQM_MEC.Controllers
                          where x.MaKhachHang == id
 						  select x;
 				List<GiaoDich> GHList = GH.ToList();
+                List<Xe> XeList = new List<Xe>();
                 for (int i = 0; i < GHList.Count; i++)
                 {
 					var Car = await _context.Xe.FindAsync(GHList[i].MaXe);
                     tong += Car.GiaThanh;
-					cmv.ListXe.Add(Car);
+					XeList.Add(Car);
                 }
+                cmv.ListXe = XeList;
+                cmv.TongTien = tong;
                 return View("Cart", cmv);
             }
             return RedirectToAction("Index", "Home");
@@ -68,10 +70,10 @@ namespace CTQM_MEC.Controllers
                     gd.SoLuongMua = 1;
                     gd.TongTien = (double)(smv.GiaThanh * 1);
 
-                    //_context.Add(gd);
-                    //await _context.SaveChangesAsync();
+                    _context.Add(gd);
+                    await _context.SaveChangesAsync();
                     ViewData["ResultGoodMessage"] = "Add to your pocket";
-                    return RedirectToAction("Cart", new { id = (int)smv.MaKhachHang});
+                    return RedirectToAction("Shopping", new { id = (int)smv.MaKhachHang});
                 }
             }
             ViewData["ResultBadMessage"] = "We out of stock";
@@ -207,22 +209,24 @@ namespace CTQM_MEC.Controllers
         }
 
         // POST: GiaoDiches/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id, CartModelView cmv)
         {
             if (_context.Giaodichs == null)
             {
                 return Problem("Entity set 'CTQMDbContext.Giaodichs'  is null.");
             }
-            var giaoDich = await _context.Giaodichs.FindAsync(id);
+            var giaoDich = await _context.Giaodichs
+               .FirstOrDefaultAsync(m => m.MaXe == id && m.MaKhachHang == cmv.MaKhachHang);
             if (giaoDich != null)
             {
-                _context.Giaodichs.Remove(giaoDich);
+                _context.Giaodichs.Remove((GiaoDich)giaoDich);
             }
             
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Shopping", new { id = (int)cmv.MaKhachHang });
         }
 
         private bool GiaoDichExists(int id)

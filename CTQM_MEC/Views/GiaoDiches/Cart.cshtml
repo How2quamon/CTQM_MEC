@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims
+@model CTQM_MEC.Models.CartModelView
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -16,13 +19,14 @@
                 <div class="tds-flex tds-flex-gutters line-item-and-order">
                     <div class="tds-flex-item">
                         <div class="lineitems__container">
+                            @foreach (var item in Model.ListXe)
+                            {
                             <div class="lineitem__container tds-flex tds-flex-gutters">
                                 <div class="lineitem__main-info">
                                     <div class="lineitem__image tds-flex-item">
-                                        <img src="https://digitalassets-shop.tesla.com/image/upload/f_auto,q_auto/v1/content/dam/tesla/studio/CAR_ACCESSORIES/MODEL_S/INTERIOR/1669541-00-A_0_2000.jpg" alt="Model S All-Weather Interior Liners">
+                                        <img src="~/images/Car/@item.TenXe/2.png" alt="Model S All-Weather Interior Liners">
                                     </div>
-                                    <div class="lineitem__data tds-flex-item">
-                                        @if (ViewData["ResultBadMessage"] != null)
+                                    @if (ViewData["ResultBadMessage"] != null)
                                         {
                                             <br />
                                             <label style="color: red;">@ViewData["ResultBadMessage"]</label>
@@ -34,70 +38,59 @@
                                             <label style="color: green;">@ViewData["ResultGoodMessage"]</label>
                                             <br />
                                         }
-                                        <p class="lineitem__name tds-text--500" id="0-1669541-00-A">Model S All-Weather Interior Liners</p>
-                                        <p class="lineitem__option-display-name">Model S</p>
-                                        <div class="lineitem__qty">
-                                            <div class="lineitem__editable-item">
-                                                <span>Quantity: </span>
-                                                <div class="lineitem__dropdown">
-                                                    <div class="tds-tooltip-wrapper tds-tooltip-wrapper--inline" aria-label="Quantity: " aria-describedby="0-1669541-00-A">
-                                                        <button style="border: none;" aria-haspopup="listbox" class="tds-dropdown-trigger" type="button">
-                                                            <div class="custom-select" style="width:50px;">
-                                                                <select>
-                                                                    <option value="0">1</option>
-                                                                    <option value="1">2</option>
-                                                                    <option value="2">3</option>
-                                                                    <option value="3">4</option>
-                                                                    <option value="4">5</option>
-                                                                    <option value="5">6</option>
-                                                                    <option value="6">7</option>
-                                                                    <option value="7">8</option>
-                                                                    <option value="8">9</option>
-
-                                                                </select>
-                                                            </div>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <button style="border: none; border-bottom: 1px solid" class="w3-button w3-black w3-margin-bottom" onclick="document.getElementById('RemoveModal').style.display='block'">Remove</button>
-                                            <!-- phan trong remove -->
-                                            <div id="RemoveModal" class="modal js-modal" style="display: none;">
-                                                <div class="modal-container js-modal-container">
-                                                    <header class="modal-header">
-                                                        <span onclick="document.getElementById('RemoveModal').style.display='none'" class="button-close">×</span>
-
-                                                    </header>
-                                                    <div class="modal-body">
-                                                        <div class="tds-modal-header">
-                                                            <h2 style="margin: 0;">Remove Item</h2>
+                                    <div class="lineitem__data tds-flex-item">
+                                            <p class="lineitem__name tds-text--500" id="0-1669541-00-A">@item.TenXe</p>
+                                            <p class="lineitem__option-display-name">@item.HangXe</p>
+                                            <div class="lineitem__qty">
+                                                <div class="lineitem__editable-item">
+                                                    <span>Quantity: </span>
+                                                    <div class="lineitem__dropdown">
+                                                        <div class="tds-tooltip-wrapper tds-tooltip-wrapper--inline" aria-label="Quantity: " aria-describedby="0-1669541-00-A">
+                                                            <button style="border: none;" aria-haspopup="listbox" class="tds-dropdown-trigger" type="button">
+                                                                <div class="custom-select" style="width:50px;">
+                                                                    <select>
+                                                                    <option value="1">1</option>
+                                                                    </select>
+                                                                </div>
+                                                            </button>
                                                         </div>
-                                                        <section class="modal-label">
-                                                            <div>
-                                                                <p>Are you sure you want to remove this item from your cart?</p>
-                                                            </div>
-                                                        </section>
-                                                        <footer class="tds-modal-footer">
-                                                            <button id="Remove" aria-describedby="0-1669541-00-A">Yes, Remove</button>
-                                                        </footer>
-
                                                     </div>
                                                 </div>
+                                                <button style="border: none; border-bottom: 1px solid" class="w3-button w3-black w3-margin-bottom" onclick="document.getElementById('RemoveModal').style.display='block'">Remove</button>
+                                        <!-- phan trong remove -->
+                                        <div id="RemoveModal" class="modal js-modal" style="display: none;">
+                                            <div class="modal-container js-modal-container">
+                                                <header class="modal-header">
+                                                    <span onclick="document.getElementById('RemoveModal').style.display='none'" class="button-close">×</span>
+                                                </header>
+                                                <form asp-action="Delete" asp-route-id=@item.MaXe class="modal-body">
+                                                <input type="number" asp-for="MaKhachHang" value=@Model.MaKhachHang style="display: none">
+                                                    <div class="tds-modal-header">
+                                                        <h2 style="margin: 0;">Remove Item</h2>
+                                                    </div>
+                                                    <section class="modal-label">
+                                                        <div>
+                                                            <p>Are you sure you want to remove this item from your cart?</p>
+                                                        </div>
+                                                    </section>
+                                                    <footer class="tds-modal-footer">
+                                                        <button id="Remove" aria-describedby="0-1669541-00-A">Yes, Remove</button>
+                                                    </footer>
+                                                </form>
                                             </div>
                                         </div>
-
+                                    </div>
                                         <div class="tds-modal-backdrop"></div>
-
                                     </div>
                                     <div class="lineitem__price tds-flex-item tds-flex--col_1of4">
-                                        <p class="tds-text--500" translate="no">$250.00</p>
+                                        <p class="tds-text--500" translate="no">@item.GiaThanh VNĐ</p>
                                     </div>
                                 </div>
-
                             </div>
+                            }
                         </div>
-
                     </div>
+
                     <div class="tds-flex-item">
                         <div class="order-summary__container">
                             <div class="order-summary__title">
@@ -129,12 +122,12 @@
                             <div class="price-summary-container">
                                 <div class="order-summary__info total">
                                     <h2 class="tds-text--h4">Subtotal</h2>
-                                    <h2 class="tds-text--h4" translate="no">$250.00</h2>
+                                    <h2 class="tds-text--h4" translate="no">@Model.TongTien VNĐ</h2>
                                 </div>
                             </div>
                             <div class="order-summary__info checkout-button">
                                 <div class="tds-btn_group tds-btn_group--vertical order-summary__info checkout">
-                                    <button class="tds-btn tds-btn--primary">Checkout</button>
+                                    <button class="tds-btn tds-btn--primary" onclick="location.href='@Url.Action("ThanhToan", "HoaDons", new {id = Int32.Parse(@Context.User.FindFirst(ClaimTypes.SerialNumber).Value)})'" >Checkout</button>
                                 </div>
                             </div>
                         </div>

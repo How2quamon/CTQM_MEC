@@ -1,0 +1,107 @@
+﻿.cart-page {
+    margin: 80px auto;
+    font-size: 1.7rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.cart-info {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+th {
+    text-align: left;
+    padding: 5px;
+    color: #fff;
+    background: #339abc;
+    font-weight: normal;
+}
+
+td {
+    padding: 10px 35px;
+}
+
+    td input {
+        width: 40px;
+        height: 30px;
+        padding: 1px;
+    }
+
+th a {
+    color: #ff523b;
+    font-size: 12px;
+}
+
+td img {
+    width: 80px;
+    height: 80px;
+    margin-right: 10px;
+}
+
+.total-price {
+    display: flex;
+    justify-content: flex-end;
+}
+
+    .total-price table {
+        border-top: 3px solid #ff523b;
+        width: 100%;
+        max-width: 520px;
+    }
+
+td:last-child {
+    text-align: right;
+}
+
+th:last-child {
+    text-align: right;
+}
+
+.align-right {
+    text-align: right;
+}
+
+.align-center {
+    text-align: center;
+}
+
+input.cancel {
+    background: white;
+    color: #166D9A;
+}
+
+input.cancel:hover {
+    background: #ff0000;
+    border-color: #ff0000;
+    cursor: pointer;
+    color: white;
+}
+
+input.confirm:hover {
+    background: #00b300;
+    border-color: #00b300;
+    color: white;
+    cursor: pointer;
+}
+
+.panel-footer input {
+    border: solid 1px #166D9A;
+    background: #166D9A;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600px;
+    color: white;
+    font-size: 1.3em;
+    text-transform: uppercase;
+    padding: 10px 15px 11px 15px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+/* .creditcard-footer{
+    margin-bottom: 600px;
+} */
+
