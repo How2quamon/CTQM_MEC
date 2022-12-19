@@ -22,9 +22,28 @@ namespace CTQM_MEC.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> Profile()
+        public async Task<IActionResult> Profile(int? id)
         {
-            return View("HoSo");
+            ProfileModelView pmv = new ProfileModelView();
+            if (id != null)
+            {
+                pmv.MaKhachHang = id;
+                var khachHang = await _context.KhachHangs.FindAsync(id);
+                pmv.TenKhachHang = khachHang.TenKhachHang;
+                var HD = from x in _context.HoaDons
+                         where x.MaKhachHang == id
+                         select x;
+                List<HoaDon> HDList = HD.ToList();
+                List<Xe> XeList = new List<Xe>();
+                for (int i = 0; i < HDList.Count; i++)
+                {
+                    var Car = await _context.Xe.FindAsync(HDList[i].MaXe);
+                    XeList.Add(Car);
+                }
+                pmv.ListXe = XeList;
+                return View("Cart", pmv);
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: KhachHangs

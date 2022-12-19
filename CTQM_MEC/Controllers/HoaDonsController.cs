@@ -21,13 +21,6 @@ namespace CTQM_MEC.Controllers
             _context = context;
         }
 
-        // GET: HoaDons
-        public async Task<IActionResult> Index()
-        {
-            var cTQMDbContext = _context.HoaDons.Include(h => h.GiaoDich);
-            return View(await cTQMDbContext.ToListAsync());
-        }
-
         [Authorize]
         public async Task<IActionResult> ThanhToan(int? id)
         {
@@ -40,17 +33,21 @@ namespace CTQM_MEC.Controllers
                          where x.MaKhachHang == id
                          select x;
                 List<GiaoDich> GHList = GH.ToList();
-                List<Xe> XeList = new List<Xe>();
-                for (int i = 0; i < GHList.Count; i++)
+                if (GHList.Count > 0)
                 {
-                    var Car = await _context.Xe.FindAsync(GHList[i].MaXe);
-                    tong += Car.GiaThanh;
-                    XeList.Add(Car);
+                    List<Xe> XeList = new List<Xe>();
+                    for (int i = 0; i < GHList.Count; i++)
+                    {
+                        var Car = await _context.Xe.FindAsync(GHList[i].MaXe);
+                        tong += Car.GiaThanh;
+                        XeList.Add(Car);
+                    }
+                    cmv.ListXe = XeList;
+                    // + 30tr tiền thuế :)
+                    cmv.TongTien = tong + (10000000 * GHList.Count);
+                    return View("ThanhToan", cmv);
                 }
-                cmv.ListXe = XeList;
-                // + 30tr tiền thuế :)
-                cmv.TongTien = tong + (10000000 * GHList.Count);
-                return View("ThanhToan", cmv);
+                return RedirectToAction("Index", "Home");
             }
             return RedirectToAction("Index", "Home");
         }
@@ -68,7 +65,8 @@ namespace CTQM_MEC.Controllers
                 for (int i = 0; i < GHList.Count;i++)
                 {
                     HoaDon hd = new HoaDon();
-                    hd.MaGiaoDich = GHList[i].MaGiaoDich;
+                    hd.MaKhachHang = GHList[i].MaKhachHang;
+                    hd.MaXe = GHList[i].MaXe;
                     hd.TongSoLuong = GHList[i].SoLuongMua;
                     hd.ThanhTien = GHList[i].TongTien + 10000000;
                     hd.NgayThanhToan = DateTime.Today;
@@ -82,124 +80,9 @@ namespace CTQM_MEC.Controllers
                     }
                     await _context.SaveChangesAsync();
                 }
-                return RedirectToAction("Profile", "KhachHangs");
+                return RedirectToAction("Profile", "KhachHangs", new {id = id});
             }
             return RedirectToAction("Index", "Home");
-        }
-
-        // GET: HoaDons/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.HoaDons == null)
-            {
-                return NotFound();
-            }
-
-            var hoaDon = await _context.HoaDons
-                .Include(h => h.GiaoDich)
-                .FirstOrDefaultAsync(m => m.MaHoaDon == id);
-            if (hoaDon == null)
-            {
-                return NotFound();
-            }
-
-            return View(hoaDon);
-        }
-
-        // GET: HoaDons/Create
-        public IActionResult Create()
-        {
-            ViewData["MaGiaoDich"] = new SelectList(_context.Giaodichs, "MaGiaoDich", "MaGiaoDich");
-            return View();
-        }
-
-        // POST: HoaDons/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MaHoaDon,MaGiaoDich,NgayThanhToan,PhuongThucThanhToan,TongSoLuong,ThanhTien")] HoaDon hoaDon)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(hoaDon);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["MaGiaoDich"] = new SelectList(_context.Giaodichs, "MaGiaoDich", "MaGiaoDich", hoaDon.MaGiaoDich);
-            return View(hoaDon);
-        }
-
-        // GET: HoaDons/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null || _context.HoaDons == null)
-            {
-                return NotFound();
-            }
-
-            var hoaDon = await _context.HoaDons.FindAsync(id);
-            if (hoaDon == null)
-            {
-                return NotFound();
-            }
-            ViewData["MaGiaoDich"] = new SelectList(_context.Giaodichs, "MaGiaoDich", "MaGiaoDich", hoaDon.MaGiaoDich);
-            return View(hoaDon);
-        }
-
-        // POST: HoaDons/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MaHoaDon,MaGiaoDich,NgayThanhToan,PhuongThucThanhToan,TongSoLuong,ThanhTien")] HoaDon hoaDon)
-        {
-            if (id != hoaDon.MaHoaDon)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(hoaDon);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!HoaDonExists(hoaDon.MaHoaDon))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["MaGiaoDich"] = new SelectList(_context.Giaodichs, "MaGiaoDich", "MaGiaoDich", hoaDon.MaGiaoDich);
-            return View(hoaDon);
-        }
-
-        // GET: HoaDons/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null || _context.HoaDons == null)
-            {
-                return NotFound();
-            }
-
-            var hoaDon = await _context.HoaDons
-                .Include(h => h.GiaoDich)
-                .FirstOrDefaultAsync(m => m.MaHoaDon == id);
-            if (hoaDon == null)
-            {
-                return NotFound();
-            }
-
-            return View(hoaDon);
         }
 
         // POST: HoaDons/Delete/5
