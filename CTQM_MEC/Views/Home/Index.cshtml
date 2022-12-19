@@ -1,8 +1,94 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "CTQM";
 }
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Home</title>
+    <link href="~/css/Home.css" rel="stylesheet" />
+</head>
+<body>
+<div class="container">
+    <div class="container_slide" >
+        <video autoplay Muted  loop >
+            <source src="~/videos/mec4.mp4">
+        </video>
+        <button class="btn" onclick="location.href='@Url.Action("Product", "Xes")'">Discover Now</button> 
+    </div>  
+    <div class="HOME">
+        <div class="Home_Pic_Text_LEFT">
+            <div class="Img">   
+                <div class="Pictures_Left">
+                    <img src="~/images/Home/mec1.jpg" alt="" >
+                </div> 
+            </div>
+            <div class="Title">
+                <div class="text_Left" >
+                    <h1>Ngoại hình siêu xe Mercedes AMG mới nhất</h1>
+                    <p >Siêu xe Mercedes AMG mới nhất có ngoại hình hầm hố và cơ bắp. Vì vậy, bên cạnh vẻ đẹp sang trọng và quyến rũ truyền thống của những chiếc xe mang thương hiệu Mercedes thì AMG còn cho vẻ đẹp khỏe khoắn. </p>
+                    <div class="bttn"><a href="#"><button class="btn" onclick="location.href='@Url.Action("Product", "Xes")'">Discover Now</button></a></div>
+                </div>
+            </div> 
+        </div>
+        <div class="Home_Pic_Text_RIGHT">
+            <div class="Title">
+                <div class="text_right">
+                    <h1>Nội thất siêu xe Mercedes AMG mới nhất</h1>
+                    <p >Không gian nội thất xe Mercedes AMG mới nhất được làm từ vật liệu da cao cấp kết hợp cùng chất liệu gỗ sang trọng. Ghế ngồi hạng thương gia có đầy đủ các tiện ích cần thiết, hệ thống âm thanh và đèn chiếu sáng hiện đại,… </p>
+                    <div class="bttn"><a href="#"><button class="btn" onclick="location.href='@Url.Action("Product", "Xes")'">Discover Now</button></a></div>
+                </div>
+            </div>
+            <div class="Img">
+                <div class="Pictures_Right">
+                    <img src="~/images/Home/mec2.webp" alt=" "  >
+                </div>
+            </div>  
+        </div>
+    </div>
+    <!-- INTRODUCE CARS -->
+    <br />
+    <br />
+        <h1>COMING SOON!</h1>
+    <div class="introduce_cars">
+        <div class="intro">
+            <div class ="right">
+                <div class="history" >
+                    <div class="history_ShopImageBox">
+                        <img class="history_ShopImage" src="https://media.zigcdn.com/media/content/2021/May/eqaawdtritle.jpg" alt="CTQM">
+                    </div>
+                    <div class="history_ShopTextWithButton history_TextWithButton">
+                        <div class="history_ShopText">
+                            <p class="tds-text--500">Mercedes-Benz EQA</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="intro">
+            <div class ="right">
+                <div class="history" >
+                    <div class="history_ShopImageBox">
+                        <img class="history_ShopImage" src="https://media.zigcdn.com/media/content/2022/Dec/cover_639c64b981967.jpg" alt="CTQM">
+                    </div>
+                    <div class="history_ShopTextWithButton history_TextWithButton">
+                        <div class="history_ShopText">
+                            <p class="tds-text--500">Mercedes-Benz AMG E 53 Cabriolet</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container_footer">
+        <video autoplay Muted  loop >
+            <source src="~/videos/Mercedes AMG GT’s - 4K Cinematic.mp4.mp4">
+        </video>
+        <div class="text-block">
+            <h4>You have to a file a flight plan before leaving the driveway</h4>
+            <p>Slide into the cockpit of the all-new Mercedes-Benz SLS AMG and the G-Force is guaranteed to keep you there. The first vehicle engineered completely in-house at AMG, its passinate design is destined to become a future classic. Its 563 hp engine accelerates from 0 to 100 km/h in just 3.8 seconds. Faster than a supersonic jet. No really, it is. And its lightweight aluminium frame, long sleek hood, and unmistakable gullwing doors turn heads just as fast.   </p>
+        </div>
+    </div>
 </div>
+</body>
+</html>

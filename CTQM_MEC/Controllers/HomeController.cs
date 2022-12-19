@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace CTQM_MEC.Controllers
 {
-    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -18,31 +17,6 @@ namespace CTQM_MEC.Controllers
         }
 
         public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Product()
-        {
-            return View();
-        }
-
-        public IActionResult ProductDetails()
-        {
-            return View();
-        }
-
-        public IActionResult Shopping()
-        {
-            return View();
-        }
-
-        public IActionResult Login()
-        {
-            return View();
-        }
-
-        public IActionResult SignUp()
         {
             return View();
         }

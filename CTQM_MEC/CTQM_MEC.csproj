@@ -21,4 +21,8 @@
     <PackageReference Include="Twilio.AspNet.Mvc" Version="7.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\Home\" />
+  </ItemGroup>
+
 </Project>
